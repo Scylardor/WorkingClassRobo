@@ -9,19 +9,27 @@ public class PlayerController : MonoBehaviour
     public float    JumpForce = 1;
     public float GravityScale = 5;
 
-    private Vector3 MoveDirection = new Vector3();
     public CharacterController Controller;
+
+    private Camera PlayerCamera;
+
+    private Vector3 MoveDirection = new Vector3();
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        PlayerCamera = Camera.main;
     }
+
 
     // Update is called once per frame
     void Update()
     {
         float moveY = MoveDirection.y;
+
         MoveDirection.x = Input.GetAxisRaw("Horizontal");
         MoveDirection.y = 0;
         MoveDirection.z = Input.GetAxisRaw("Vertical");
@@ -36,5 +44,9 @@ public class PlayerController : MonoBehaviour
         MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
 
         Controller.Move(MoveDirection * Time.deltaTime);
+
+        // Only rotate the player if it's moving around
+        if (MoveDirection.x != 0f || MoveDirection.z != 0f)
+            transform.rotation = Quaternion.Euler(0f, PlayerCamera.transform.rotation.eulerAngles.y, 0f);
     }
 }
