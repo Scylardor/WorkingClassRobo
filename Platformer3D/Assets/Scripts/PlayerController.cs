@@ -30,9 +30,8 @@ public class PlayerController : MonoBehaviour
     {
         float moveY = MoveDirection.y;
 
-        MoveDirection.x = Input.GetAxisRaw("Horizontal");
-        MoveDirection.y = 0;
-        MoveDirection.z = Input.GetAxisRaw("Vertical");
+        MoveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+
         MoveDirection *= MoveSpeed;
         MoveDirection.y = moveY;
 
