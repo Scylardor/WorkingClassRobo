@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         float moveY = MoveDirection.y;
 
         MoveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
-
+        MoveDirection.Normalize();
         MoveDirection *= MoveSpeed;
         MoveDirection.y = moveY;
 
