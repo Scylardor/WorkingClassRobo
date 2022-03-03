@@ -12,16 +12,19 @@ public class PlayerController : MonoBehaviour
 
     public CharacterController Controller;
 
-    private Camera PlayerCamera;
-
     private Vector3 MoveDirection = new Vector3();
 
+    private Camera PlayerCamera;
+
     public GameObject PlayerModel;
+
+    public Animator PlayerAnimator;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // Just reference main camera
         PlayerCamera = Camera.main;
     }
 
@@ -53,5 +56,7 @@ public class PlayerController : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(new Vector3(MoveDirection.x, 0f, MoveDirection.z));
             PlayerModel.transform.rotation = Quaternion.Slerp(PlayerModel.transform.rotation, newRotation, RotationSpeed * Time.deltaTime);
         }
+
+        PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
     }
 }
