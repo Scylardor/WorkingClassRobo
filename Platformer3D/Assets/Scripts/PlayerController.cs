@@ -39,10 +39,14 @@ public class PlayerController : MonoBehaviour
         MoveDirection *= MoveSpeed;
         MoveDirection.y = moveY;
 
-        if (Input.GetButtonDown("Jump"))
+        if (Controller.isGrounded)
         {
-            MoveDirection.y = JumpForce;
+            if (Input.GetButtonDown("Jump"))
+            {
+                MoveDirection.y = JumpForce;
+            }
         }
+
 
         MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
 
@@ -58,5 +62,6 @@ public class PlayerController : MonoBehaviour
         }
 
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
+        PlayerAnimator.SetBool("Grounded", Controller.isGrounded);
     }
 }
