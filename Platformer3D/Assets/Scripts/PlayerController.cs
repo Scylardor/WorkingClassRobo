@@ -46,9 +46,11 @@ public class PlayerController : MonoBehaviour
                 MoveDirection.y = JumpForce;
             }
         }
+        else
+        {
+            MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
+        }
 
-
-        MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
 
         Controller.Move(MoveDirection * Time.deltaTime);
 
