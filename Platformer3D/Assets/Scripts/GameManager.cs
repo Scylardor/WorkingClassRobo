@@ -8,9 +8,6 @@ public class GameManager : MonoBehaviour
 
     private Vector3 PlayerRespawnPosition;
 
-
-
-
     void Awake()
     {
         Instance = this;
@@ -42,9 +39,14 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.Instance.gameObject.SetActive(false);
 
+        // Necessary to avoid a weird camera warping on respawn
         CameraController.Instance.CameraBrain.enabled = false;
 
+        UIManager.Instance.FadingIn = true;
+
         yield return new WaitForSeconds(2f);
+
+        UIManager.Instance.FadingOut = true;
 
         PlayerController.Instance.transform.position = PlayerRespawnPosition;
         PlayerController.Instance.gameObject.SetActive(true);
