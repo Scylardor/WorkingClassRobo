@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,13 +13,16 @@ public class PlayerController : MonoBehaviour
 
     public CharacterController Controller;
 
-    private Vector3 MoveDirection = new Vector3();
+    private Vector3 MoveDirection;
 
     private Camera PlayerCamera;
 
     public GameObject PlayerModel;
 
     public Animator PlayerAnimator;
+
+    private Knockable KnockableCpnt;
+
 
     public static PlayerController Instance;
 
@@ -32,11 +36,49 @@ public class PlayerController : MonoBehaviour
     {
         // Just reference main camera
         PlayerCamera = Camera.main;
+
+        KnockableCpnt = GetComponent<Knockable>();
+
+        KnockableCpnt.KnockbackEvent += this.OnKnockback;
+    }
+
+    private void OnKnockback()
+    {
+        MoveDirection.y = KnockableCpnt.KnockbackPower.y;
+        Controller.Move(MoveDirection * Time.deltaTime);
     }
 
 
     // Update is called once per frame
     void Update()
+    {
+        bool knockedBack = (KnockableCpnt != null && KnockableCpnt.IsKnockedBack);
+        // do not interfere with the knocking movement
+        if (!knockedBack)
+        {
+            ControlPlayer();
+        }
+        else
+        {
+            KnockbackPlayer();
+        }
+
+        UpdateAnimationController();
+    }
+
+    private void KnockbackPlayer()
+    {
+        float moveY = MoveDirection.y;
+
+        MoveDirection = transform.forward * -KnockableCpnt.KnockbackPower.x;
+        MoveDirection.y = moveY;
+
+        MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
+
+        Controller.Move(MoveDirection * Time.deltaTime);
+    }
+
+    private void ControlPlayer()
     {
         float moveY = MoveDirection.y;
 
@@ -68,7 +110,10 @@ public class PlayerController : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(new Vector3(MoveDirection.x, 0f, MoveDirection.z));
             PlayerModel.transform.rotation = Quaternion.Slerp(PlayerModel.transform.rotation, newRotation, RotationSpeed * Time.deltaTime);
         }
+    }
 
+    private void UpdateAnimationController()
+    {
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
         PlayerAnimator.SetBool("Grounded", Controller.isGrounded);
     }
