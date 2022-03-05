@@ -59,7 +59,12 @@ public class GameManager : MonoBehaviour
 
         CameraController.Instance.CameraBrain.enabled = true;
 
-
+        // Reset all Health components to default
+        Health[] hps = FindObjectsOfType<Health>();
+        foreach (Health hp in hps)
+        {
+            hp.ResetHealth();
+        }
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)
