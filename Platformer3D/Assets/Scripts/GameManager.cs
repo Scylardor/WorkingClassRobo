@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 
     private Vector3 PlayerRespawnPosition;
 
+    public delegate void RespawnEvent();
+    public event RespawnEvent   OnPlayerDeath;
+    public event RespawnEvent   OnPlayerRespawning;
+
+
     void Awake()
     {
         Instance = this;
@@ -44,6 +49,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.FadingIn = true;
 
+
         yield return new WaitForSeconds(2f);
 
         UIManager.Instance.FadingOut = true;
@@ -54,5 +60,10 @@ public class GameManager : MonoBehaviour
         CameraController.Instance.CameraBrain.enabled = true;
 
 
+    }
+
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        PlayerRespawnPosition = newSpawnPoint;
     }
 }
