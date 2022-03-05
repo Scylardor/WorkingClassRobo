@@ -16,11 +16,19 @@ public class Health : MonoBehaviour
     [Min(0f)]
     public float    InvincibilityDuration = 0f;
 
+    [Min(0f)]
+    public float InvincibilityFlashingPeriod = 0.1f;
+
+    public GameObject[] InvincibilityFlashingObjects;
+
     private bool    IsInvincible = false;
+
 
     public delegate void OnHurt(int newHP);
 
     public event OnHurt HurtEvent;
+
+
 
     void Start()
     {
@@ -30,8 +38,9 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
+
+
 
     public void Hurt(int damage = 1)
     {
@@ -54,14 +63,42 @@ public class Health : MonoBehaviour
 
         HurtEvent?.Invoke(CurrentHP);
 
-        IsInvincible = true;
-
         if (InvincibilityDuration != 0f)
         {
-            yield return new WaitForSeconds(InvincibilityDuration);
+            IsInvincible = true;
+            yield return FlashingRoutine();
         }
 
         IsInvincible = false;
+    }
+
+
+    private IEnumerator FlashingRoutine()
+    {
+        float invincibilitySoFar = 0f;
+
+        float halfPeriod = InvincibilityFlashingPeriod / 2f;
+
+        while (invincibilitySoFar < InvincibilityDuration)
+        {
+            foreach (GameObject flashingObj in InvincibilityFlashingObjects)
+            {
+                flashingObj.SetActive(false);
+            }
+
+            invincibilitySoFar += halfPeriod;
+
+            yield return new WaitForSeconds(halfPeriod);
+
+            foreach (GameObject flashingObj in InvincibilityFlashingObjects)
+            {
+                flashingObj.SetActive(true);
+            }
+
+            yield return new WaitForSeconds(halfPeriod);
+
+            invincibilitySoFar += halfPeriod;
+        }
     }
 
 }
