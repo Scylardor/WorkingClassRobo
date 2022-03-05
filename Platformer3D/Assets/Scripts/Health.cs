@@ -24,9 +24,10 @@ public class Health : MonoBehaviour
     private bool    IsInvincible = false;
 
 
-    public delegate void OnHurt(int newHP);
+    public delegate void HPChange(int newHP);
 
-    public event OnHurt HurtEvent;
+    public event HPChange HurtEvent;
+    public event HPChange HealEvent;
 
 
 
@@ -49,6 +50,12 @@ public class Health : MonoBehaviour
             StartCoroutine(HurtRoutine(damage));
         }
 
+    }
+
+    public void Heal(int healed = 1)
+    {
+        CurrentHP = Math.Min(CurrentHP + 1, MaxHP);
+        HealEvent?.Invoke(CurrentHP);
     }
 
     public void ResetHealth()
