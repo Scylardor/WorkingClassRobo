@@ -11,8 +11,6 @@ public class Knockable : MonoBehaviour
 
     public Vector2 KnockbackPower;
 
-    private float KnockbackCountdown = 0f;
-
     public delegate void OnKnockback();
 
     public event OnKnockback KnockbackEvent;
@@ -27,20 +25,23 @@ public class Knockable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsKnockedBack)
-        {
-            KnockbackCountdown -= Time.deltaTime;
-            if (KnockbackCountdown <= 0)
-                IsKnockedBack = false;
 
-        }
     }
 
     public void Knockback()
     {
+        StartCoroutine(KnockbackRoutine());
+    }
+
+    private IEnumerator KnockbackRoutine()
+    {
         IsKnockedBack = true;
-        KnockbackCountdown = KnockbackDuration;
+
         Debug.Log("Knocked back !");
         KnockbackEvent?.Invoke();
+
+        yield return new WaitForSeconds(KnockbackDuration);
+
+        IsKnockedBack = false;
     }
 }

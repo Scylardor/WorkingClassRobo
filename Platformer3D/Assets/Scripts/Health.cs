@@ -13,12 +13,16 @@ public class Health : MonoBehaviour
     [Min(0)]
     public int  MaxHP = 0;
 
+    [Min(0f)]
+    public float    InvincibilityDuration = 0f;
+
+    private bool    IsInvincible = false;
+
     public delegate void OnHurt(int newHP);
 
     public event OnHurt HurtEvent;
 
     void Start()
-
     {
         CurrentHP = MaxHP;
     }
@@ -31,18 +35,33 @@ public class Health : MonoBehaviour
 
     public void Hurt(int damage = 1)
     {
-        CurrentHP = Math.Max(CurrentHP - damage, 0);
-        if (CurrentHP == 0)
+        if (!IsInvincible)
         {
-            GameManager.Instance.RespawnPlayer();
+            StartCoroutine(HurtRoutine(damage));
         }
 
-        HurtEvent?.Invoke(CurrentHP);
     }
 
     public void ResetHealth()
     {
         CurrentHP = MaxHP;
+    }
+
+
+    private IEnumerator HurtRoutine(int damage)
+    {
+        CurrentHP = Math.Max(CurrentHP - damage, 0);
+
+        HurtEvent?.Invoke(CurrentHP);
+
+        IsInvincible = true;
+
+        if (InvincibilityDuration != 0f)
+        {
+            yield return new WaitForSeconds(InvincibilityDuration);
+        }
+
+        IsInvincible = false;
     }
 
 }

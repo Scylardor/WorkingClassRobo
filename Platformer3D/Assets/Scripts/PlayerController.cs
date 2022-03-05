@@ -40,6 +40,20 @@ public class PlayerController : MonoBehaviour
         KnockableCpnt = GetComponent<Knockable>();
 
         KnockableCpnt.KnockbackEvent += this.OnKnockback;
+
+        var HPCpnt = GetComponent<Health>();
+        if (HPCpnt != null)
+        {
+            HPCpnt.HurtEvent += this.OnHurt;
+        }
+    }
+
+    private void OnHurt(int newHP)
+    {
+        if (newHP == 0)
+        {
+            GameManager.Instance.RespawnPlayer();
+        }
     }
 
     private void OnKnockback()
