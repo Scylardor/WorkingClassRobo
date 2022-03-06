@@ -33,7 +33,6 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        CurrentHP = MaxHP;
     }
 
     // Update is called once per frame
@@ -61,6 +60,7 @@ public class Health : MonoBehaviour
     public void ResetHealth()
     {
         CurrentHP = MaxHP;
+        IsInvincible = false;
     }
 
 

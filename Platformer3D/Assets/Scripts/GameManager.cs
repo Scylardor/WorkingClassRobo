@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
         {
             hp.ResetHealth();
         }
+
+        PlayerController.Instance.GetComponent<Knockable>().IsKnockedBack = false;
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)
