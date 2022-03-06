@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
 
     public void Heal(int healed = 1)
     {
-        CurrentHP = Math.Min(CurrentHP + 1, MaxHP);
+        CurrentHP = Math.Min(CurrentHP + healed, MaxHP);
         HealEvent?.Invoke(CurrentHP);
     }
 
@@ -59,6 +59,7 @@ public class Health : MonoBehaviour
     {
         CurrentHP = MaxHP;
         IsInvincible = false;
+        HealEvent?.Invoke(CurrentHP);
     }
 
 
