@@ -18,8 +18,15 @@ public class KillZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        var HP = other.GetComponent<Health>();
+        if (HP != null)
+        {
+            HP.Hurt(HP.MaxHP);
+        }
+
         if (other.tag == "Player")
         {
+
             GameManager.Instance.RespawnPlayer();
         }
     }
