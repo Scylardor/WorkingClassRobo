@@ -8,10 +8,10 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
 
     [Min(0)]
-    public int  CurrentHP = 0;
+    public int  CurrentHP;
 
     [Min(0)]
-    public int  MaxHP = 0;
+    public int  MaxHP;
 
     [Min(0f)]
     public float    InvincibilityDuration = 0f;
@@ -28,8 +28,6 @@ public class Health : MonoBehaviour
 
     public event HPChange HurtEvent;
     public event HPChange HealEvent;
-
-
 
     void Start()
     {

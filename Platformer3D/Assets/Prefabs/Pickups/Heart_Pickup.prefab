@@ -110,3 +110,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealAmount: 1
+  PickedUpEffect: {fileID: 4516925065079875676, guid: d2dbe5ce9523b7c43b487fe2c3547f0c, type: 3}

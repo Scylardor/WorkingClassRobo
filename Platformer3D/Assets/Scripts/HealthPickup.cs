@@ -6,6 +6,8 @@ public class HealthPickup : MonoBehaviour
 {
     public int HealAmount = 1;
 
+    public GameObject PickedUpEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,8 @@ public class HealthPickup : MonoBehaviour
     {
         var hp = other.GetComponent<Health>();
         hp.Heal(HealAmount);
+
+        Instantiate(PickedUpEffect, gameObject.transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }
