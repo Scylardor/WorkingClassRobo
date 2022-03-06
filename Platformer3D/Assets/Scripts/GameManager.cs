@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     private Vector3 PlayerRespawnPosition;
 
+    public GameObject   PlayerDeathEffect;
+
     public delegate void RespawnEvent();
     public event RespawnEvent   OnPlayerDeath;
     public event RespawnEvent   OnPlayerRespawning;
@@ -44,11 +46,13 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.Instance.gameObject.SetActive(false);
 
+        // Spawn death fx
+        Instantiate(PlayerDeathEffect, PlayerController.Instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.Instance.transform.rotation);
+
         // Necessary to avoid a weird camera warping on respawn
         CameraController.Instance.CameraBrain.enabled = false;
 
         UIManager.Instance.FadingIn = true;
-
 
         yield return new WaitForSeconds(2f);
 
