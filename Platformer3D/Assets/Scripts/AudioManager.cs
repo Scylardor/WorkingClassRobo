@@ -15,8 +15,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource MusicPlayer;
 
-    public AudioSource SFXPlayer;
-
+    public AudioSource  DefaultSFX2D;
 
 
     void Awake()
@@ -49,9 +48,12 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlayDefaultSFX()
+    public void PlayDefault2DSound(AudioClip clip = null)
     {
-        this.GetComponent<AudioSource>()?.Play();
+        if (clip != null)
+            DefaultSFX2D.clip = clip;
+
+        this.DefaultSFX2D.Play();
     }
 
     public void OnValidate()

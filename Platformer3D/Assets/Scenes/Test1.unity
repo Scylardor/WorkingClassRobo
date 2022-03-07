@@ -279,7 +279,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7551c4b318a1ce24a805e67ff95bc319, type: 3}
   ClipToPlay: 0
   MusicPlayer: {fileID: 772659114}
-  SFXPlayer: {fileID: 1641721423}
+  DefaultSFX2D: {fileID: 0}
 --- !u!82 &88179602
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1212,7 +1212,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 690209761144620004, guid: 1b8515fd1e5eafd4ab808d72ce349f38, type: 3}
   m_PrefabInstance: {fileID: 1562924191}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1903851478
+--- !u!95 &1903851484
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -1601,35 +1601,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130545276720, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000003015067
+      value: 6.656844e-10
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130545276720, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.4071058e-10
+      value: -0.000000011872237
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130661323228, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000009284839
+      value: -0.00000001426265
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130661323228, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000008318313
+      value: -0.000000018446482
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130809324383, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000014978434
+      value: -0.000000016591521
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130809324383, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 4.4084297e-10
+      value: -4.885402e-10
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130895904231, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000004402386
+      value: -0.000000014482492
       objectReference: {fileID: 0}
     - target: {fileID: 9192537130895904231, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000005777691
+      value: -0.000000018138731
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b69cbb2d6dd4cd0408e7ebeb16b7f59c, type: 3}
