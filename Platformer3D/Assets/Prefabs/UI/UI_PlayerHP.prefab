@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4822411566283834306}
   - component: {fileID: 8880914658138221943}
   m_Layer: 0
-  m_Name: PlayerHPText
+  m_Name: UI_PlayerHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthText: {fileID: 4516929441099292996}
-  HealthBar: {fileID: 5343301830645551755}
+  HealthBar: {fileID: 6712449559485040106}
   HealthBars:
   - {fileID: 21300000, guid: 0abe686a66daf0a47b7e16646c028015, type: 3}
   - {fileID: 21300000, guid: 9747b288945b33e4388f3a3feeaba235, type: 3}
@@ -88,8 +88,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 226.4287, y: 110.8}
+  m_AnchoredPosition: {x: 2, y: -89}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6657175470352695353
 CanvasRenderer:
@@ -121,11 +121,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: aa92a030aff5a5740ad1edf6362c4398, type: 3}
-    m_FontSize: 60
+    m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 60
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

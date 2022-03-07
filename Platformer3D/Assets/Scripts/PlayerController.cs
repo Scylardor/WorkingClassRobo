@@ -126,9 +126,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Animation
     private void UpdateAnimationController()
     {
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
         PlayerAnimator.SetBool("Grounded", Controller.isGrounded);
     }
+
+    #endregion
 }

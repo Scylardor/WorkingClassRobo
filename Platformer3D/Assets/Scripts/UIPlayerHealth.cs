@@ -9,7 +9,7 @@ public class UIPlayerHealth : MonoBehaviour
 
     public Text HealthText;
 
-    public GameObject HealthBar;
+    public Image HealthBar;
 
     public Sprite[] HealthBars;
 
@@ -28,17 +28,15 @@ public class UIPlayerHealth : MonoBehaviour
     private void OnPlayerHPUpdate(int newhp)
     {
         HealthText.text = newhp.ToString();
-        var barImg = HealthBar.GetComponent<Image>();
-
         if (!(newhp >= 1 && newhp <= 5))
         {
             Debug.Log("Unsupported HP value, cannot update health bar !");
-            barImg.enabled = false;
+            HealthBar.enabled = false;
         }
         else
         {
-            barImg.enabled = true;
-            barImg.sprite = HealthBars[newhp - 1];
+            HealthBar.enabled = true;
+            HealthBar.sprite = HealthBars[newhp - 1];
         }
     }
 

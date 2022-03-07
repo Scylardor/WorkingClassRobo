@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
 
     private Vector3 PlayerRespawnPosition;
 
+    private int CoinAmount;
+
     public GameObject   PlayerDeathEffect;
 
     public delegate void RespawnEvent();
     public event RespawnEvent   OnPlayerDeath;
     public event RespawnEvent   OnPlayerRespawning;
 
+    public delegate void CoinAmountChange(int newCoinAmount);
+    public event CoinAmountChange CoinChangeEvent;
 
     void Awake()
     {
@@ -39,6 +43,18 @@ public class GameManager : MonoBehaviour
     public void RespawnPlayer()
     {
         StartCoroutine(RespawnRoutine());
+    }
+
+
+    public void AddCoins(int nbCoinAdded)
+    {
+        CoinAmount += nbCoinAdded;
+        CoinChangeEvent(CoinAmount);
+    }
+
+    public int GetCoins()
+    {
+        return CoinAmount;
     }
 
 
