@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
 
     public GameObject[] InvincibilityFlashingObjects;
 
+    public AudioSource HurtSFX;
+
     private bool    IsInvincible = false;
 
 
@@ -68,6 +70,8 @@ public class Health : MonoBehaviour
         CurrentHP = Math.Max(CurrentHP - damage, 0);
 
         HurtEvent?.Invoke(CurrentHP);
+
+        this.HurtSFX?.Play();
 
         if (InvincibilityDuration != 0f)
         {

@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPickup : MonoBehaviour
+public class HealthPickup : BasePickup
 {
     public int HealAmount = 1;
-
-    public GameObject PickedUpEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +18,11 @@ public class HealthPickup : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         var hp = other.GetComponent<Health>();
         hp.Heal(HealAmount);
-
-        Instantiate(PickedUpEffect, gameObject.transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
     }
 }

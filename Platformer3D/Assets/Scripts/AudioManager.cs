@@ -11,7 +11,9 @@ public class AudioManager : MonoBehaviour
 
     private int PlayingClip;
 
-    public AudioSource Player;
+    public AudioSource MusicPlayer;
+
+    public AudioSource SFXPlayer;
 
 
     // Start is called before the first frame update
@@ -28,8 +30,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(int musicIdx)
     {
-        Player.clip = MusicClips[musicIdx];
-        Player.Play();
+        this.MusicPlayer.clip = MusicClips[musicIdx];
+        this.MusicPlayer.Play();
         PlayingClip = musicIdx;
     }
 

@@ -1,11 +1,13 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Security.Cryptography;
+
+using Unity.VisualScripting;
+
 using UnityEngine;
 
-public class CoinPickup : MonoBehaviour
+public class CoinPickup : BasePickup
 {
-    public GameObject PickupEffect;
+    public int CoinsGained = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -19,16 +21,13 @@ public class CoinPickup : MonoBehaviour
 
     }
 
-    public void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (other.tag == "Player")
         {
-            GameManager.Instance.AddCoins(1);
-
-            Instantiate(PickupEffect, gameObject.transform.position, Quaternion.identity);
-
-            Destroy(gameObject);
+            GameManager.Instance.AddCoins(CoinsGained);
         }
-
     }
 }

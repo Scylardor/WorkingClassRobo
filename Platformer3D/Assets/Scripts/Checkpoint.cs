@@ -40,6 +40,7 @@ public class Checkpoint : MonoBehaviour
                     mats[1] = cp.TurnedOffMaterial;
                     cp.Renderer.materials = mats;
 
+                    cp.ActivationParticles.Clear(); // instantly kills all particles
                     cp.ActivationParticles.Stop();
                 }
             }
@@ -57,7 +58,7 @@ public class Checkpoint : MonoBehaviour
 
             ActivationParticles.Play();
 
-
+            GetComponent<AudioSource>()?.Play();
 
         }
     }
