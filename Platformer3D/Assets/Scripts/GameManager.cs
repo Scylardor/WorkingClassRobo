@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.Instance.gameObject.SetActive(false);
 
+        // Play death sound
+
+        AudioManager.Instance.PlayDefaultSFX();
+
         // Spawn death fx
         Instantiate(PlayerDeathEffect, PlayerController.Instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.Instance.transform.rotation);
 

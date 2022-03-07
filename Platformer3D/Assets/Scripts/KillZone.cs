@@ -23,11 +23,5 @@ public class KillZone : MonoBehaviour
         {
             HP.Hurt(HP.MaxHP);
         }
-
-        if (other.tag == "Player")
-        {
-
-            GameManager.Instance.RespawnPlayer();
-        }
     }
 }

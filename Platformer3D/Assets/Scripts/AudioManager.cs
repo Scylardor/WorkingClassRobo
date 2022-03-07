@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager  Instance;
+
     public AudioClip[]  MusicClips;
     public AudioClip[]  SFXClips;
 
@@ -15,6 +17,12 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource SFXPlayer;
 
+
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +41,17 @@ public class AudioManager : MonoBehaviour
         this.MusicPlayer.clip = MusicClips[musicIdx];
         this.MusicPlayer.Play();
         PlayingClip = musicIdx;
+    }
+
+    public void PlaySFX(AudioSource source)
+    {
+
+    }
+
+
+    public void PlayDefaultSFX()
+    {
+        this.GetComponent<AudioSource>()?.Play();
     }
 
     public void OnValidate()
