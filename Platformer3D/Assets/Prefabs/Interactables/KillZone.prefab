@@ -57,3 +57,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cd8b6607afb53478623c7f824ba430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerKilledSound: {fileID: 8300000, guid: 723dde7643628664a8b559187baf0c92, type: 3}

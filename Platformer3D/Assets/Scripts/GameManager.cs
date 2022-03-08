@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private int CoinAmount;
 
+    public AudioClip    PlayerDeathSound;
     public GameObject   PlayerDeathEffect;
 
     public delegate void RespawnEvent();
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         // Play death sound
 
-        AudioManager.Instance.PlayDefault2DSound();
+        AudioManager.Instance.PlayPersistentSFX2D(PlayerDeathSound);
 
         // Spawn death fx
         Instantiate(PlayerDeathEffect, PlayerController.Instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.Instance.transform.rotation);

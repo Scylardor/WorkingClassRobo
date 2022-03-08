@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource MusicPlayer;
 
-    public AudioSource  DefaultSFX2D;
+    public AudioSource  PersistentSFX2D;
 
 
     void Awake()
@@ -48,12 +48,19 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlayDefault2DSound(AudioClip clip = null)
+    public void PlayPersistentSFX2D(AudioClip clip = null)
     {
-        if (clip != null)
-            DefaultSFX2D.clip = clip;
+        if (this.PersistentSFX2D == null)
+        {
+            Debug.LogError("Tried to use PlayPersistentSFX2D but PersistentSFX2D is null");
+            return;
+        }
 
-        this.DefaultSFX2D.Play();
+        if (clip != null)
+        {
+            this.PersistentSFX2D.clip = clip;
+        }
+        this.PersistentSFX2D.Play();
     }
 
     public void OnValidate()
