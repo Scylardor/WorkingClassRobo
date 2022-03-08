@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,13 +24,45 @@ public class PlayerController : MonoBehaviour
 
     private Knockable KnockableCpnt;
 
+    private InGameInputActions  PlayerActions;
+    private InputAction PauseAction;
 
     public static PlayerController Instance;
+
+    public delegate void PauseEventHandler(bool inPause);
+
+    public event PauseEventHandler OnPauseTriggered;
+
+    private bool Paused = false;
+
+    private bool IsJumping = false;
 
     void Awake()
     {
         Instance = this;
+        this.PlayerActions = new InGameInputActions();
     }
+
+
+    private void OnEnable()
+    {
+        this.PauseAction = this.PlayerActions.Player.Pause;
+        this.PauseAction.performed += this.OnPauseInput;
+        this.PauseAction.Enable();
+    }
+
+    private void OnPauseInput(InputAction.CallbackContext obj)
+    {
+        TogglePause();
+    }
+
+    public void TogglePause()
+    {
+        this.Paused = !this.Paused;
+        OnPauseTriggered(this.Paused);
+        Debug.Log("Pause triggered");
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -106,6 +139,11 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 MoveDirection.y = JumpForce;
+                IsJumping = true;
+            }
+            else
+            {
+                IsJumping = false;
             }
         }
         else
@@ -130,7 +168,9 @@ public class PlayerController : MonoBehaviour
     private void UpdateAnimationController()
     {
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
-        PlayerAnimator.SetBool("Grounded", Controller.isGrounded);
+        PlayerAnimator.SetBool("IsGrounded", Controller.isGrounded);
+        PlayerAnimator.SetBool("IsJumping", this.IsJumping);
+        Debug.Log($"{Controller.isGrounded} {this.IsJumping}");
     }
 
     #endregion

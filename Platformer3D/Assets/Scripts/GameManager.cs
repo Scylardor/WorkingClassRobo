@@ -28,10 +28,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
-
         PlayerRespawnPosition = PlayerController.Instance.transform.position;
+
+        PlayerController.Instance.OnPauseTriggered += this.ToggleWorldPause;
+
+    }
+
+    private void ToggleWorldPause(bool paused)
+    {
+        Time.timeScale = paused ? 0f : 1f;
     }
 
     // Update is called once per frame

@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public float    FadeToBlackDuration;
     public bool     FadingIn, FadingOut;
 
+    public GameObject PauseScreen;
+    public GameObject OptionsScreen;
+
     void Awake()
     {
         Instance = this;
@@ -21,7 +24,30 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        PlayerController.Instance.OnPauseTriggered += this.TogglePauseUI;
+        this.PauseScreen.SetActive(false);
+        this.OptionsScreen.SetActive(false);
     }
+
+    private void TogglePauseUI(bool paused)
+    {
+        this.PauseScreen.SetActive(paused);
+        if (paused)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            this.CloseOptions(); // in case the options screen was open, close it
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -47,5 +73,36 @@ public class UIManager : MonoBehaviour
                 FadingOut = false;
             }
         }
+    }
+
+
+    public void Resume()
+    {
+        PlayerController.Instance.TogglePause();
+
+    }
+
+    public void MainMenu()
+    {
+
+    }
+
+    public void Options()
+    {
+
+
+        this.OptionsScreen.SetActive(true);
+    }
+
+    public void CloseOptions()
+    {
+        this.OptionsScreen.SetActive(false);
+    }
+
+
+    public void Quit()
+    {
+
+
     }
 }
