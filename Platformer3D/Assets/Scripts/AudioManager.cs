@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager  Instance;
 
     public AudioClip[]  MusicClips;
-    public AudioClip[]  SFXClips;
 
     public int ClipToPlay;
 
@@ -16,6 +16,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource MusicPlayer;
 
     public AudioSource  PersistentSFX2D;
+
+    public AudioMixerGroup MusicMixer;
+
+    public AudioMixerGroup SFXMixer;
 
 
     void Awake()
@@ -42,11 +46,6 @@ public class AudioManager : MonoBehaviour
         PlayingClip = musicIdx;
     }
 
-    public void PlaySFX(AudioSource source)
-    {
-
-    }
-
 
     public void PlayPersistentSFX2D(AudioClip clip = null)
     {
@@ -67,5 +66,17 @@ public class AudioManager : MonoBehaviour
     {
         if (this.ClipToPlay != this.PlayingClip)
             PlayMusic(this.ClipToPlay);
+    }
+
+
+    public void SetMusicLevel(float value)
+    {
+        this.MusicMixer.audioMixer.SetFloat("MusicVolume", value);
+    }
+
+
+    public void SetSFXLevel(float value)
+    {
+        this.SFXMixer.audioMixer.SetFloat("SFXVolume", value);
     }
 }

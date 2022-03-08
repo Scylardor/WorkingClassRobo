@@ -16,6 +16,10 @@ public class UIManager : MonoBehaviour
     public GameObject PauseScreen;
     public GameObject OptionsScreen;
 
+    public Slider MusicSlider;
+
+    public Slider SFXSlider;
+
     void Awake()
     {
         Instance = this;
@@ -103,6 +107,13 @@ public class UIManager : MonoBehaviour
     public void Quit()
     {
 
+    public void SetMusicLevel()
+    {
+        AudioManager.Instance.SetMusicLevel(this.MusicSlider.value);
+    }
+    public void SetSFXLevel()
+    {
+        AudioManager.Instance.SetSFXLevel(this.SFXSlider.value);
 
     }
 }
