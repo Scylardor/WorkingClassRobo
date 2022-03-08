@@ -47,10 +47,14 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         this.PauseAction = this.PlayerActions.Player.Pause;
-        this.PauseAction.performed += this.OnPauseInput;
+        this.PauseAction.started += this.OnPauseInput;
         this.PauseAction.Enable();
     }
-
+    private void OnDisable()
+    {
+        this.PauseAction.started -= this.OnPauseInput;
+        this.PauseAction.Disable();
+    }
     private void OnPauseInput(InputAction.CallbackContext obj)
     {
         TogglePause();
