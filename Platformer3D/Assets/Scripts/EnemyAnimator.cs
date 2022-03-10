@@ -9,17 +9,57 @@ public class EnemyAnimator : MonoBehaviour
     public Animator AnimController;
 
     // With a velocity square magnitude equal or superior to this, we are considered as moving.
-    public float MovingSquareVelocityTolerance = 0f;
+    public float MovingSquareVelocityTolerance = 2f;
+
+    public float AttackCooldown = 1f;
+
+    private bool IsAttackCoolingDown = false;
+
+    private bool IsAttacking = false;
+
+    public PatrolController AIController;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (AIController != null)
+        {
+            AIController.OnStartAttack += this.OnAttack;
+            AIController.OnEndAttack += this.OnAttackEnd;
+        }
+    }
 
+    private void OnAttackEnd()
+    {
+        this.IsAttacking = false;
+    }
+
+    private void OnAttack()
+    {
+        IsAttacking = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.AnimController.SetBool("IsMoving", this.Agent.velocity.sqrMagnitude >= this.MovingSquareVelocityTolerance);
+        float sqrDistance = Vector3.SqrMagnitude(PlayerController.Instance.transform.position - transform.position);
+
+        if (IsAttacking && !this.IsAttackCoolingDown)
+        {
+            this.AnimController.SetTrigger("Attack");
+
+            StartCoroutine(this.CooldownAttack());
+        }
+
+        this.AnimController.SetBool(
+            "IsMoving",
+            this.Agent.velocity.sqrMagnitude >= this.MovingSquareVelocityTolerance);
+    }
+
+    IEnumerator CooldownAttack()
+    {
+        this.IsAttackCoolingDown = true;
+        yield return new WaitForSeconds(this.AttackCooldown);
+        this.IsAttackCoolingDown = false;
     }
 }

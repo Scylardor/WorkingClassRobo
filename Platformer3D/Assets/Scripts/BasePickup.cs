@@ -23,7 +23,6 @@ public class BasePickup : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-
             Instantiate(PickedUpEffect, gameObject.transform.position, Quaternion.identity);
 
             this.GetComponent<Renderer>().enabled = false;

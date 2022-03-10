@@ -174,7 +174,6 @@ public class PlayerController : MonoBehaviour
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(MoveDirection.x) + Mathf.Abs(MoveDirection.z));
         PlayerAnimator.SetBool("IsGrounded", Controller.isGrounded);
         PlayerAnimator.SetBool("IsJumping", this.IsJumping);
-        Debug.Log($"{Controller.isGrounded} {this.IsJumping}");
     }
 
     #endregion
