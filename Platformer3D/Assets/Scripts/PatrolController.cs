@@ -41,8 +41,16 @@ public class PatrolController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.agent.SetDestination(this.patrolPoints[this.currentPoint].position);
-        this.currentState = AIState.IsPatrolling;
+        if (this.patrolPoints.Length != 0)
+        {
+            this.agent.SetDestination(this.patrolPoints[this.currentPoint].position);
+            this.currentState = AIState.IsPatrolling;
+        }
+        else
+        {
+            Debug.Log("No patrol points set, Patrol Controller will idle");
+        }
+
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,8 +6,8 @@ using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
-
-    public int HurtAmount = 1;
+    [SerializeField]
+    public Health.DamageInfo DamageInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,6 @@ public class DamageDealer : MonoBehaviour
     {
         Debug.Log(this.gameObject.name + " hurts " + other.name);
         var hp = other.GetComponent<Health>();
-        hp?.Hurt(HurtAmount);
+        hp?.Hurt(this.DamageInfo);
     }
 }

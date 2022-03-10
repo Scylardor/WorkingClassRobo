@@ -20,23 +20,16 @@ public class KillZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AudioClip oldPlayerDeathSound = null;
         if (other.tag == "Player")
         {
-            oldPlayerDeathSound = GameManager.Instance.PlayerDeathSound;
-            GameManager.Instance.PlayerDeathSound = PlayerKilledSound;
+            AudioManager.Instance.Play2DSound(this.PlayerKilledSound);
         }
 
         var HP = other.GetComponent<Health>();
         if (HP != null)
         {
-            HP.Hurt(HP.MaxHP);
+            HP.Hurt(new Health.DamageInfo(HP.MaxHP, null, Health.HurtSoundType.Silent));
         }
 
-        // Put back the original death sound
-        if (oldPlayerDeathSound != null)
-        {
-            GameManager.Instance.PlayerDeathSound = oldPlayerDeathSound;
-        }
     }
 }

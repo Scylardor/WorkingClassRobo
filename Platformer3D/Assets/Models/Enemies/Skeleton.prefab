@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2050289102}
   - component: {fileID: 2050289103}
   - component: {fileID: 2050289104}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14709cfdefbedbe49a93a8eee05d26d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HurtAmount: 1
+  DamageInfo:
+    Damage: 1
+    HurtSound: {fileID: 0}
+    Type: 0
 --- !u!1 &65124159981741896
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,11 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2389a14c9fe8a479c12c994ea2ef8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   DestinationReachedTolerance: 0.2
   PatrolPointReachedWaitTime: 2
   ChaseRangeSquare: 500
@@ -167,6 +166,7 @@ MonoBehaviour:
   AttackCooldown: 3
   AIController: {fileID: 1824364179}
   DeathParticles: {fileID: 4959924243131733954, guid: a247eca4dbbef0344bce54da8e8c5caf, type: 3}
+  DroppedPickup: {fileID: 2386913589590038246, guid: 30178e875dc2e194fb78a7ccbc68cfef, type: 3}
 --- !u!114 &1391127776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   InvincibilityDuration: 0
   InvincibilityFlashingPeriod: 0.1
   InvincibilityFlashingObjects: []
-  HurtSound: {fileID: 8300000, guid: 13e9fbf4185a234469ab95384ee3d963, type: 3}
+  DefaultHurtSound: {fileID: 0}
   SoundType: 1
 --- !u!1001 &9143197973731139578
 PrefabInstance:

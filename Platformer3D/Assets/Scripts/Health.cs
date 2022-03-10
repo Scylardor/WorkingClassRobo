@@ -21,16 +21,37 @@ public class Health : MonoBehaviour
 
     public GameObject[] InvincibilityFlashingObjects;
 
-    public AudioClip HurtSound;
+    public AudioClip DefaultHurtSound;
 
     public enum HurtSoundType
     {
         Sound2D,
 
-        Sound3D
-    };
+        Sound3D,
 
-    public HurtSoundType SoundType = HurtSoundType.Sound2D;
+        Silent
+    }
+
+    [System.Serializable]
+    public struct DamageInfo
+    {
+        public int Damage;
+
+        public AudioClip HurtSound;
+
+        public HurtSoundType Type;
+
+        public DamageInfo(int dmg, AudioClip sound = null, HurtSoundType soundType = HurtSoundType.Sound2D)
+        {
+            this.Damage = dmg;
+            this.HurtSound = sound;
+            this.Type = soundType;
+        }
+    }
+
+
+
+    public Health.HurtSoundType SoundType = Health.HurtSoundType.Sound2D;
 
 
     private bool    IsInvincible = false;
@@ -55,58 +76,60 @@ public class Health : MonoBehaviour
 
 
 
-    public void Hurt(int damage = 1)
+    public void Hurt(DamageInfo dmgInfo)
     {
-        if (!IsInvincible)
+        if (!this.IsInvincible)
         {
-            StartCoroutine(HurtRoutine(damage));
+            this.StartCoroutine(this.HurtRoutine(dmgInfo));
         }
 
     }
 
     public void Heal(int healed = 1)
     {
-        CurrentHP = Math.Min(CurrentHP + healed, MaxHP);
-        HealEvent?.Invoke(CurrentHP);
+        this.CurrentHP = Math.Min(this.CurrentHP + healed, this.MaxHP);
+        this.HealEvent?.Invoke(this.CurrentHP);
     }
 
     public void ResetHealth()
     {
-        CurrentHP = MaxHP;
-        IsInvincible = false;
-        HealEvent?.Invoke(CurrentHP);
+        this.CurrentHP = this.MaxHP;
+        this.IsInvincible = false;
+        this.HealEvent?.Invoke(this.CurrentHP);
     }
 
 
-    private IEnumerator HurtRoutine(int damage)
+    private IEnumerator HurtRoutine(DamageInfo dmgInfo)
     {
-        CurrentHP = Math.Max(CurrentHP - damage, 0);
+        this.CurrentHP = Math.Max(this.CurrentHP - dmgInfo.Damage, 0);
 
-        HurtEvent?.Invoke(CurrentHP);
+        this.HurtEvent?.Invoke(this.CurrentHP);
 
-        if (this.HurtSound != null)
+        if (dmgInfo.Type != HurtSoundType.Silent)
+            this.PlayHurtSound(dmgInfo);
+
+        if (this.InvincibilityDuration != 0f)
         {
-            this.PlayHurtSound();
+            this.IsInvincible = true;
+            yield return this.FlashingRoutine();
         }
 
-        if (InvincibilityDuration != 0f)
-        {
-            IsInvincible = true;
-            yield return FlashingRoutine();
-        }
-
-        IsInvincible = false;
+        this.IsInvincible = false;
     }
 
-    private void PlayHurtSound()
+    private void PlayHurtSound(DamageInfo dmgInfo)
     {
-        switch (this.SoundType)
+        var playedClip = dmgInfo.HurtSound != null ? dmgInfo.HurtSound : this.DefaultHurtSound;
+        if (playedClip == null)
+            return;
+
+        switch (dmgInfo.Type)
         {
             case HurtSoundType.Sound2D:
-                AudioManager.Instance.Play2DSound(this.HurtSound);
+                AudioManager.Instance.Play2DSound(playedClip);
                 break;
             case HurtSoundType.Sound3D:
-                AudioManager.Instance.Play3DSound(this.transform.position, this.HurtSound);
+                AudioManager.Instance.Play3DSound(this.transform.position, playedClip);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -115,15 +138,15 @@ public class Health : MonoBehaviour
 
     private IEnumerator FlashingRoutine()
     {
-        InvincibleEvent?.Invoke(true);
+        this.InvincibleEvent?.Invoke(true);
 
         float invincibilitySoFar = 0f;
 
-        float halfPeriod = InvincibilityFlashingPeriod / 2f;
+        float halfPeriod = this.InvincibilityFlashingPeriod / 2f;
 
-        while (invincibilitySoFar < InvincibilityDuration)
+        while (invincibilitySoFar < this.InvincibilityDuration)
         {
-            foreach (GameObject flashingObj in InvincibilityFlashingObjects)
+            foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
                 flashingObj.SetActive(false);
             }
@@ -132,7 +155,7 @@ public class Health : MonoBehaviour
 
             yield return new WaitForSeconds(halfPeriod);
 
-            foreach (GameObject flashingObj in InvincibilityFlashingObjects)
+            foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
                 flashingObj.SetActive(true);
             }
@@ -142,7 +165,6 @@ public class Health : MonoBehaviour
             invincibilitySoFar += halfPeriod;
         }
 
-        InvincibleEvent?.Invoke(false);
+        this.InvincibleEvent?.Invoke(false);
     }
-
 }
