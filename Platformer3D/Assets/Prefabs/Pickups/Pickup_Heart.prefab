@@ -10,7 +10,7 @@ Animator:
   m_GameObject: {fileID: 690209761144620004}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9bf48c528a39c89408c2426b5389973e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -32,6 +32,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickedUpEffect: {fileID: 4516925065079875676, guid: d2dbe5ce9523b7c43b487fe2c3547f0c, type: 3}
+  PickedUpSound: {fileID: 8300000, guid: 60e4b103d31a7b84c8043df4f0abeeba, type: 3}
   HealAmount: 1
 --- !u!1001 &6795228121531489562
 PrefabInstance:
@@ -136,7 +137,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickup_Heart
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 352235763025828057, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
 --- !u!1 &690209761144620004 stripped
 GameObject:

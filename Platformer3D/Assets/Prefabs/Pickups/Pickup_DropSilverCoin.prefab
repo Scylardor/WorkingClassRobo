@@ -10,7 +10,7 @@ Animator:
   m_GameObject: {fileID: 690209761144620004}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 25d35893f0b73c74db1bf655dfc83d12, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c52d5fb1ff0c9845bc88fa24cff7e15, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickedUpEffect: {fileID: 4516925065079875676, guid: 714e5387ce37c46469bb122f6e83f8cf, type: 3}
   PickedUpSound: {fileID: 8300000, guid: d73ea25d0592e7d4390990411295ce73, type: 3}
-  CoinsGained: 1
+  CoinsGained: 2
 --- !u!1001 &6795228121531489562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48,30 +48,38 @@ PrefabInstance:
     - target: {fileID: 2137723900577877127, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: ab63eb2abc323ed4bac0f4a275a00cce, type: 3}
+      objectReference: {fileID: 4300000, guid: 83d59a2145ea9204eadb63ef9d59df28, type: 3}
     - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 300
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 300
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 300
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977851304750539846, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5352007408021494069, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Radius
-      value: 0.006
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5352007408021494069, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Center.y
@@ -136,14 +144,14 @@ PrefabInstance:
     - target: {fileID: 9091933925795637434, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ab63eb2abc323ed4bac0f4a275a00cce, type: 3}
+      objectReference: {fileID: 2100000, guid: 83d59a2145ea9204eadb63ef9d59df28, type: 3}
     - target: {fileID: 9091933925795637434, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100002, guid: ab63eb2abc323ed4bac0f4a275a00cce, type: 3}
+      objectReference: {fileID: 2100000, guid: 0768b2ca843dd554583031d06a6a1896, type: 2}
     - target: {fileID: 9182130155209886716, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_Name
-      value: Pickup_Coin
+      value: Pickup_DropSilverCoin
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 352235763025828057, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}

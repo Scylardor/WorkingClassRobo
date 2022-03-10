@@ -21,6 +21,8 @@ public class EnemyAnimator : MonoBehaviour
 
     public GameObject DeathParticles;
 
+    public GameObject DroppedPickup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,10 @@ public class EnemyAnimator : MonoBehaviour
             {
                 Instantiate(this.DeathParticles, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
             }
+
+             if (this.DroppedPickup != null)
+                Instantiate(this.DroppedPickup, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
+
             Destroy(gameObject);
         }
     }

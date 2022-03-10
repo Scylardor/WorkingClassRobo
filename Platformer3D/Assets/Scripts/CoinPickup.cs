@@ -20,7 +20,15 @@ public class CoinPickup : BasePickup
     {
 
     }
+    protected override void OnCollisionEnter(Collision other)
+    {
+        base.OnCollisionEnter(other);
 
+        if (other.gameObject.tag == "Player")
+        {
+            GameManager.Instance.AddCoins(CoinsGained);
+        }
+    }
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
