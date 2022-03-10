@@ -184,7 +184,7 @@ MonoBehaviour:
   InvincibilityDuration: 0
   InvincibilityFlashingPeriod: 0.1
   InvincibilityFlashingObjects: []
-  DefaultHurtSound: {fileID: 0}
+  DefaultHurtSound: {fileID: 8300000, guid: 13e9fbf4185a234469ab95384ee3d963, type: 3}
   SoundType: 1
 --- !u!1001 &9143197973731139578
 PrefabInstance:
