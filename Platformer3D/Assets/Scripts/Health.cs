@@ -34,6 +34,9 @@ public class Health : MonoBehaviour
 
 
     private bool    IsInvincible = false;
+    public delegate void InvincibilityEventHandler(bool isInvincible);
+
+    public event InvincibilityEventHandler InvincibleEvent;
 
 
     public delegate void HPChange(int newHP);
@@ -112,6 +115,8 @@ public class Health : MonoBehaviour
 
     private IEnumerator FlashingRoutine()
     {
+        InvincibleEvent?.Invoke(true);
+
         float invincibilitySoFar = 0f;
 
         float halfPeriod = InvincibilityFlashingPeriod / 2f;
@@ -136,6 +141,8 @@ public class Health : MonoBehaviour
 
             invincibilitySoFar += halfPeriod;
         }
+
+        InvincibleEvent?.Invoke(false);
     }
 
 }

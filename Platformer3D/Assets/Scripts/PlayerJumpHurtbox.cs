@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class PlayerJumpHurtbox : DamageDealer
 {
-    public PlayerController BounceController;
+    public PlayerController BoundController;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        var HP = this.BoundController.GetComponent<Health>();
+        if (HP != null)
+            HP.InvincibleEvent += this.OnInvincibilityChange;
+    }
 
+    private void OnInvincibilityChange(bool isinvincible)
+    {
+        // Deactiate the hurtbox when the player is invincible due to received damage.
+        this.gameObject.SetActive(!isinvincible);
     }
 
     // Update is called once per frame
@@ -21,7 +30,7 @@ public class PlayerJumpHurtbox : DamageDealer
     {
         base.OnTriggerEnter(other);
 
-        BounceController?.Bounce();
+        this.BoundController?.Bounce();
 
     }
 }
