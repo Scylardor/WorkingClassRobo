@@ -27,6 +27,20 @@ public class EnemyAnimator : MonoBehaviour
             AIController.OnStartAttack += this.OnAttack;
             AIController.OnEndAttack += this.OnAttackEnd;
         }
+
+        var HP = this.GetComponent<Health>();
+        if (HP != null)
+        {
+            HP.HurtEvent += this.OnHurt;
+        }
+    }
+
+    private void OnHurt(int newhp)
+    {
+        if (newhp == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnAttackEnd()

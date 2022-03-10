@@ -1,58 +1,152 @@
 fileFormatVersion: 2
 guid: 716efe551541c9047aebad72e86838d9
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Armature
-    100002: Body
-    100004: Hand.L
-    100006: Hand.L_end
-    100008: Hand.R
-    100010: Hand.R_end
-    100012: Head
-    100014: LeftEye
-    100016: LeftEye_end
-    100018: LowerArm.L
-    100020: LowerArm.R
-    100022: Neck
-    100024: RightEye
-    100026: RightEye_end
-    100028: Root
-    100030: Shoulder.L
-    100032: Shoulder.R
-    100034: //RootNode
-    100036: Slime
-    400000: Armature
-    400002: Body
-    400004: Hand.L
-    400006: Hand.L_end
-    400008: Hand.R
-    400010: Hand.R_end
-    400012: Head
-    400014: LeftEye
-    400016: LeftEye_end
-    400018: LowerArm.L
-    400020: LowerArm.R
-    400022: Neck
-    400024: RightEye
-    400026: RightEye_end
-    400028: Root
-    400030: Shoulder.L
-    400032: Shoulder.R
-    400034: //RootNode
-    400036: Slime
-    2100000: Body
-    2100002: Eyes
-    4300000: Slime
-    7400000: Armature|Slime_Attack
-    7400002: Armature|Slime_Death
-    7400004: Armature|Slime_Idle
-    7400006: Armature|Slime_Walk
-    9500000: //RootNode
-    13700000: Slime
+  serializedVersion: 21100
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Armature
+  - first:
+      1: 100002
+    second: Body
+  - first:
+      1: 100004
+    second: Hand.L
+  - first:
+      1: 100006
+    second: Hand.L_end
+  - first:
+      1: 100008
+    second: Hand.R
+  - first:
+      1: 100010
+    second: Hand.R_end
+  - first:
+      1: 100012
+    second: Head
+  - first:
+      1: 100014
+    second: LeftEye
+  - first:
+      1: 100016
+    second: LeftEye_end
+  - first:
+      1: 100018
+    second: LowerArm.L
+  - first:
+      1: 100020
+    second: LowerArm.R
+  - first:
+      1: 100022
+    second: Neck
+  - first:
+      1: 100024
+    second: RightEye
+  - first:
+      1: 100026
+    second: RightEye_end
+  - first:
+      1: 100028
+    second: Root
+  - first:
+      1: 100030
+    second: Shoulder.L
+  - first:
+      1: 100032
+    second: Shoulder.R
+  - first:
+      1: 100034
+    second: //RootNode
+  - first:
+      1: 100036
+    second: Slime
+  - first:
+      4: 400000
+    second: Armature
+  - first:
+      4: 400002
+    second: Body
+  - first:
+      4: 400004
+    second: Hand.L
+  - first:
+      4: 400006
+    second: Hand.L_end
+  - first:
+      4: 400008
+    second: Hand.R
+  - first:
+      4: 400010
+    second: Hand.R_end
+  - first:
+      4: 400012
+    second: Head
+  - first:
+      4: 400014
+    second: LeftEye
+  - first:
+      4: 400016
+    second: LeftEye_end
+  - first:
+      4: 400018
+    second: LowerArm.L
+  - first:
+      4: 400020
+    second: LowerArm.R
+  - first:
+      4: 400022
+    second: Neck
+  - first:
+      4: 400024
+    second: RightEye
+  - first:
+      4: 400026
+    second: RightEye_end
+  - first:
+      4: 400028
+    second: Root
+  - first:
+      4: 400030
+    second: Shoulder.L
+  - first:
+      4: 400032
+    second: Shoulder.R
+  - first:
+      4: 400034
+    second: //RootNode
+  - first:
+      4: 400036
+    second: Slime
+  - first:
+      21: 2100000
+    second: Body
+  - first:
+      21: 2100002
+    second: Eyes
+  - first:
+      43: 4300000
+    second: Slime
+  - first:
+      74: 7400000
+    second: Armature|Slime_Attack
+  - first:
+      74: 7400002
+    second: Armature|Slime_Death
+  - first:
+      74: 7400004
+    second: Armature|Slime_Idle
+  - first:
+      74: 7400006
+    second: Armature|Slime_Walk
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Slime
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -85,25 +179,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -112,10 +213,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -125,13 +226,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

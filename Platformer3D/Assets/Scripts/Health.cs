@@ -21,7 +21,17 @@ public class Health : MonoBehaviour
 
     public GameObject[] InvincibilityFlashingObjects;
 
-    public AudioSource HurtSFX;
+    public AudioClip HurtSound;
+
+    public enum HurtSoundType
+    {
+        Sound2D,
+
+        Sound3D
+    };
+
+    public HurtSoundType SoundType = HurtSoundType.Sound2D;
+
 
     private bool    IsInvincible = false;
 
@@ -71,7 +81,10 @@ public class Health : MonoBehaviour
 
         HurtEvent?.Invoke(CurrentHP);
 
-        this.HurtSFX?.Play();
+        if (this.HurtSound != null)
+        {
+            this.PlayHurtSound();
+        }
 
         if (InvincibilityDuration != 0f)
         {
@@ -82,6 +95,20 @@ public class Health : MonoBehaviour
         IsInvincible = false;
     }
 
+    private void PlayHurtSound()
+    {
+        switch (this.SoundType)
+        {
+            case HurtSoundType.Sound2D:
+                AudioManager.Instance.Play2DSound(this.HurtSound);
+                break;
+            case HurtSoundType.Sound3D:
+                AudioManager.Instance.Play3DSound(this.transform.position, this.HurtSound);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
 
     private IEnumerator FlashingRoutine()
     {

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
         // Play death sound
 
-        AudioManager.Instance.PlayPersistentSFX2D(PlayerDeathSound);
+        AudioManager.Instance.Play2DSound(PlayerDeathSound);
 
         // Spawn death fx
         Instantiate(PlayerDeathEffect, PlayerController.Instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.Instance.transform.rotation);

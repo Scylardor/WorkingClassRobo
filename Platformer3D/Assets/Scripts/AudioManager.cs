@@ -15,7 +15,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource MusicPlayer;
 
-    public AudioSource  PersistentSFX2D;
+    public AudioSource  SoundPlayer2D;
+    public AudioSource  SoundPlayer3D;
 
     public AudioMixerGroup MusicMixer;
 
@@ -47,21 +48,33 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlayPersistentSFX2D(AudioClip clip = null)
+    public void Play2DSound(AudioClip clip = null)
     {
-        if (this.PersistentSFX2D == null)
+        if (this.SoundPlayer2D == null)
         {
-            Debug.LogError("Tried to use PlayPersistentSFX2D but PersistentSFX2D is null");
+            Debug.LogError("Tried to use Play2DSound but SoundPlayer2D is null");
             return;
         }
 
         if (clip != null)
         {
-            this.PersistentSFX2D.clip = clip;
+            this.SoundPlayer2D.PlayOneShot(clip);
         }
-        this.PersistentSFX2D.Play();
     }
+    public void Play3DSound(Vector3 position, AudioClip clip = null)
+    {
+        if (this.SoundPlayer3D == null)
+        {
+            Debug.LogError("Tried to use Play3DSound but SoundPlayer3D is null");
+            return;
+        }
 
+        if (clip != null)
+        {
+            this.transform.position = position;
+            this.SoundPlayer3D.PlayOneShot(clip);
+        }
+    }
     public void OnValidate()
     {
         if (this.ClipToPlay != this.PlayingClip)
