@@ -19,6 +19,8 @@ public class EnemyAnimator : MonoBehaviour
 
     public PatrolController AIController;
 
+    public GameObject DeathParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,10 @@ public class EnemyAnimator : MonoBehaviour
     {
         if (newhp == 0)
         {
+            if (this.DeathParticles != null)
+            {
+                Instantiate(this.DeathParticles, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
+            }
             Destroy(gameObject);
         }
     }

@@ -166,6 +166,7 @@ MonoBehaviour:
   MovingSquareVelocityTolerance: 2
   AttackCooldown: 3
   AIController: {fileID: 1824364179}
+  DeathParticles: {fileID: 4959924243131733954, guid: a247eca4dbbef0344bce54da8e8c5caf, type: 3}
 --- !u!114 &1391127776
 MonoBehaviour:
   m_ObjectHideFlags: 0
