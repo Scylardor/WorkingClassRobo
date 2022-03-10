@@ -21,8 +21,9 @@ public class DamageDealer : MonoBehaviour
     }
 
 
-    public void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
+        Debug.Log(this.gameObject.name + " hurts " + other.name);
         var hp = other.GetComponent<Health>();
         hp?.Hurt(HurtAmount);
     }

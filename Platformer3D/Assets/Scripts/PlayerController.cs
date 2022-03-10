@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float    JumpForce = 1;
     public float    GravityScale = 5;
 
+    public float EnemyHitBounceForce = 8f;
+
     public CharacterController Controller;
 
     private Vector3 MoveDirection;
@@ -67,6 +69,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Pause triggered");
     }
 
+    public void Bounce()
+    {
+        float bounceForce = this.EnemyHitBounceForce * (Input.GetButton("Jump") ? 1.5f : 1f);
+
+        this.MoveDirection.y = bounceForce;
+        this.Controller.Move(this.MoveDirection * Time.deltaTime);
+
+    }
 
     // Start is called before the first frame update
     void Start()
