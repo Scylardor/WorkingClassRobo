@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void Play2DSound(AudioClip clip = null)
+    public void Play2DSound(AudioClip clip = null, float volumeScale = 1)
     {
         if (this.SoundPlayer2D == null)
         {
@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour
 
         if (clip != null)
         {
-            this.SoundPlayer2D.PlayOneShot(clip);
+            this.SoundPlayer2D.PlayOneShot(clip, volumeScale);
         }
     }
     public void Play3DSound(Vector3 position, AudioClip clip = null)
@@ -85,6 +85,33 @@ public class AudioManager : MonoBehaviour
     public void SetMusicLevel(float value)
     {
         this.MusicMixer.audioMixer.SetFloat("MusicVolume", value);
+    }
+
+    public float GetMusicCurrentVolume()
+    {
+        float vol;
+        this.MusicMixer.audioMixer.GetFloat("MusicVolume", out vol);
+        return vol;
+    }
+    public void FadeMusicVolume(float duration, float targetVolume)
+    {
+        StartCoroutine(FadeVolumeRoutine("MusicVolume", duration, targetVolume));
+    }
+
+    private IEnumerator FadeVolumeRoutine(string exposedParam, float duration, float targetVolume)
+    {
+        float currentTime = 0;
+        float currentVol;
+        this.MusicMixer.audioMixer.GetFloat(exposedParam, out currentVol);
+        currentVol = Mathf.Pow(10, currentVol / 20);
+        float targetValue = Mathf.Clamp(targetVolume, 0.0001f, 1);
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newVol = Mathf.Lerp(currentVol, targetValue, currentTime / duration);
+            this.MusicMixer.audioMixer.SetFloat(exposedParam, Mathf.Log10(newVol) * 20);
+            yield return null;
+        }
     }
 
 

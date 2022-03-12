@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
 
     private bool IsJumping = false;
 
+    private bool isCurrentlyGrounded;
+
+    public delegate void LandedEventHandler();
+    public event LandedEventHandler OnLanded;
+
     void Awake()
     {
         Instance = this;
@@ -113,6 +118,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (this.Controller.isGrounded && !this.isCurrentlyGrounded)
+        {
+            OnLanded?.Invoke(); // we were in the air and we just landed
+            this.isCurrentlyGrounded = true;
+        }
+        else if (!this.Controller.isGrounded && this.isCurrentlyGrounded)
+        {
+            this.isCurrentlyGrounded = false;
+        }
+
+        // Can be useful e.g. when controls are locked during a dialog or star collected moment
+        if (this.Controller.enabled == false)
+            return;
+
         bool knockedBack = (KnockableCpnt != null && KnockableCpnt.IsKnockedBack);
         // do not interfere with the knocking movement
         if (!knockedBack)
