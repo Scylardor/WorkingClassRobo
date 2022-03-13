@@ -98,6 +98,8 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeVolumeRoutine("MusicVolume", duration, targetVolume));
     }
 
+
+    // Inspired by https://johnleonardfrench.com/how-to-fade-audio-in-unity-i-tested-every-method-this-ones-the-best/
     private IEnumerator FadeVolumeRoutine(string exposedParam, float duration, float targetVolume)
     {
         float currentTime = 0;
