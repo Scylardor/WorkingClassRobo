@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2063635948052258025}
   - component: {fileID: 5770381840223422957}
   - component: {fileID: 8956898483223791106}
+  - component: {fileID: 990133055681703956}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4864,6 +4865,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &990133055681703956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251043429359223107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd78316456c70848893687dd9c0174d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4516925065079875676
 GameObject:
   m_ObjectHideFlags: 0
@@ -4873,7 +4886,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7633850433197575359}
-  - component: {fileID: 6217235158897789503}
   m_Layer: 0
   m_Name: CoinPickedUp
   m_TagString: Untagged
@@ -4896,16 +4908,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6217235158897789503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4516925065079875676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c822accd4daee4d83f98c3b85ca250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifetimeDuration: 2

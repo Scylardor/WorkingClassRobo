@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 82899773491867806}
-  - component: {fileID: 6265113202340134646}
+  - component: {fileID: 9019519869961739453}
   m_Layer: 0
   m_Name: PlayerDeath
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6265113202340134646
+--- !u!114 &9019519869961739453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +42,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4959924243131733954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c822accd4daee4d83f98c3b85ca250, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd78316456c70848893687dd9c0174d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifetimeDuration: 3
 --- !u!1 &8257994691173075607
 GameObject:
   m_ObjectHideFlags: 0

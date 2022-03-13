@@ -51,8 +51,9 @@ public class BasePickup : MonoBehaviour
             if (this.PickedUpSound != null)
             {
                 AudioManager.Instance.Play2DSound(this.PickedUpSound);
-                Destroy(gameObject);
             }
+
+            Destroy(gameObject.transform.root.gameObject);
         }
     }
 }
