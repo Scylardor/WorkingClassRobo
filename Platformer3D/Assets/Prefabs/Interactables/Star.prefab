@@ -285,8 +285,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickedUpSound: {fileID: 8300000, guid: 65477ba742509fb44bafd9db2c2598e5, type: 3}
-  SoundScale: 3
+  SoundScale: 2
   PickedUpJingle: {fileID: 8300000, guid: d1c35f7cd6811a54fb29828693607bbf, type: 3}
   starLoopSound: {fileID: 6415790389521862057}
   RotationSpeed: 50
   AnimController: {fileID: 952991767}
+  AnimationTimeUntilPause: 0.75
+  AnimationPauseTime: 2
+  CollectedMusicFadeOutDuration: 0.5
+  CollectedMusicFadeInDuration: 5

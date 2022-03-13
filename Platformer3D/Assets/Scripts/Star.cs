@@ -15,6 +15,13 @@ public class Star : MonoBehaviour
 
     public Animator AnimController;
 
+    public float AnimationTimeUntilPause = 0f;
+    public float AnimationPauseTime = 0f;
+
+    public float CollectedMusicFadeOutDuration = 0.5f;
+
+    public float CollectedMusicFadeInDuration = 5f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,19 +31,44 @@ public class Star : MonoBehaviour
     private void OnPlayerLanded()
     {
         PlayerController.Instance.OnLanded -= this.OnPlayerLanded;
-        PlayerController.Instance.Controller.enabled = false;
-        PlayerController.Instance.PlayerAnimator.SetTrigger("ToggleThumbsUp");
-        PlayerController.Instance.PlayerAnimator.SetFloat("Speed", 0f);
-        StartCoroutine(this.PickupMusicManagement());
+
+        StartCoroutine(this.ScheduleCollectionMusic());
+        StartCoroutine(this.ScheduleCollectedPlayerAnimation());
     }
 
-    IEnumerator PickupMusicManagement()
+    private IEnumerator ScheduleCollectionMusic()
     {
-        AudioManager.Instance.Play2DSound(this.PickedUpJingle);
+        AudioManager.Instance.Play2DSound(this.PickedUpJingle, SoundScale);
+
         yield return new WaitForSeconds(5f);
-        AudioManager.Instance.FadeMusicVolume(5f, 1);
+
+        AudioManager.Instance.FadeMusicVolume(CollectedMusicFadeInDuration, 1);
+    }
+
+    IEnumerator ScheduleCollectedPlayerAnimation()
+    {
+        PlayerController.Instance.Controller.enabled = false;
+
+        PlayerController.Instance.PlayerAnimator.SetTrigger("ToggleThumbsUp");
+
+        // to avoid player triggering running animation erroneously
+        PlayerController.Instance.PlayerAnimator.SetFloat("Speed", 0f);
+
+        if (this.AnimationTimeUntilPause != 0f)
+        {
+            yield return new WaitForSeconds(this.AnimationTimeUntilPause);
+
+            // Freeze animation.
+            float oldSpeed = PlayerController.Instance.PlayerAnimator.speed;
+            PlayerController.Instance.PlayerAnimator.speed = 0f;
+
+            yield return new WaitForSeconds(this.AnimationPauseTime);
+
+            // Resume animation.
+            PlayerController.Instance.PlayerAnimator.speed = oldSpeed;
+        }
+
         PlayerController.Instance.Controller.enabled = true;
-        yield return null;
     }
 
 
@@ -48,17 +80,21 @@ public class Star : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AudioManager.Instance.Play2DSound(this.PickedUpSound, 3);
+        AudioManager.Instance.Play2DSound(this.PickedUpSound, SoundScale);
 
-        AudioManager.Instance.FadeMusicVolume(0.5f, 0f);
+        AudioManager.Instance.FadeMusicVolume(this.CollectedMusicFadeOutDuration, 0f);
 
-        PlayerController.Instance.OnLanded += this.OnPlayerLanded;
 
         this.GetComponent<Collider>().enabled = false;
         starLoopSound.Stop();
 
         AnimController.SetTrigger("Collected");
 
-        this.RotationSpeed *= 5f;
+        this.RotationSpeed *= 10f;
+
+        if (PlayerController.Instance.Controller.isGrounded)
+            this.OnPlayerLanded();
+        else
+            PlayerController.Instance.OnLanded += this.OnPlayerLanded;
     }
 }
