@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 38.94647, y: 10, z: 28.418907}
+  m_Center: {x: 22.764559, y: 0, z: 18.146214}
 --- !u!114 &4481995018528851770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e2ac9433e66be49b224b3e254bdeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelToLoad: Level1
 --- !u!1 &6919416908476050737
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6919416908933172062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.328041, y: 3.1061897, z: 44.564804}
+  m_LocalPosition: {x: 16.328041, y: 25.3, z: 89.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6919416910191244810}
@@ -153,8 +154,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 90, y: 20, z: 40}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 84.63304, y: 37.33956, z: 85.1793}
+  m_Center: {x: 2.6834793, y: -8.669777, z: -22.58965}
 --- !u!114 &7418403493700708926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d30a5ed6ce7b54c817d9299af8633b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelTitleAnimator: {fileID: 0}
-  previewMusic: {fileID: 0}
+  LevelTitleAnimator: {fileID: 6919416908933172063}
+  previewMusic: {fileID: 8300000, guid: 2f0b6bfa40ae2504d83625982ee8f858, type: 3}
   fadePreviewMusicDuration: 0.5
 --- !u!1 &6919416910191244805
 GameObject:
@@ -181,6 +182,7 @@ GameObject:
   - component: {fileID: 6919416910191244810}
   - component: {fileID: 6919416910191244808}
   - component: {fileID: 6919416910191244811}
+  - component: {fileID: 1958999518}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -204,7 +206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -10.8}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6919416910191244808
@@ -245,7 +247,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1019270895
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
@@ -269,7 +271,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PEACE HARBOR
+  m_text: 'PEACEFUL HARBOR
+
+    <sprite=0> 0/100
+
+    <sprite=1> 0/100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -288,7 +294,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: ee7bb69583cddb540bba7b6e6100cff6, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -296,13 +302,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 79.2
+  m_fontSizeBase: 79.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -341,3 +347,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6919416910191244808}
   m_maskType: 0
+--- !u!114 &1958999518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919416910191244805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AngleMultiplier: 0.1
+  SpeedMultiplier: 1
+  CurveScale: 0.3
