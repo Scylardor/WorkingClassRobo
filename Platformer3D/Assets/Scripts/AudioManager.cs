@@ -47,6 +47,18 @@ public class AudioManager : MonoBehaviour
         PlayingClip = musicIdx;
     }
 
+    public void PlayMusic(AudioClip clip)
+    {
+        if (clip == null)
+        {
+            Debug.LogError("Clip passed to PlayMusic is null");
+            return;
+        }
+
+        this.MusicPlayer.clip = clip;
+        this.MusicPlayer.Play();
+    }
+
 
     public void Play2DSound(AudioClip clip = null, float volumeScale = 1)
     {
@@ -98,6 +110,25 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeVolumeRoutine("MusicVolume", duration, targetVolume));
     }
 
+    public void Crossfade(float fadeOutDuration, float fadeInDuration, AudioClip incomingClip)
+    {
+        if (incomingClip == null)
+            incomingClip = this.MusicClips[0];
+
+        StartCoroutine(CrossfadeCo(fadeOutDuration, fadeInDuration, incomingClip));
+    }
+
+    private IEnumerator CrossfadeCo(float fadeOutDuration, float fadeInDuration, AudioClip incomingClip)
+    {
+        StartCoroutine(FadeVolumeRoutine("MusicVolume", fadeOutDuration, 0));
+
+        yield return new WaitForSeconds(fadeOutDuration);
+
+        MusicPlayer.clip = incomingClip;
+        MusicPlayer.Play();
+
+        StartCoroutine(FadeVolumeRoutine("MusicVolume", fadeInDuration, 1));
+    }
 
     // Inspired by https://johnleonardfrench.com/how-to-fade-audio-in-unity-i-tested-every-method-this-ones-the-best/
     private IEnumerator FadeVolumeRoutine(string exposedParam, float duration, float targetVolume)

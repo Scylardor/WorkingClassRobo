@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
         PlayerController.Instance.OnPauseTriggered += this.ToggleWorldPause;
 
+        Time.timeScale = 1f; // in case we went to main menu directly from pause menu previously
     }
 
     private void ToggleWorldPause(bool paused)

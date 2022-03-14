@@ -35,6 +35,11 @@ public class UIManager : MonoBehaviour
         PlayerController.Instance.OnPauseTriggered += this.TogglePauseUI;
         this.PauseScreen.SetActive(false);
         this.OptionsScreen.SetActive(false);
+
+        // Start the level with fading out from the black screen
+        BlackScreen.color = new Color(0f, 0f, 0f, 1f);
+
+        this.FadingOut = true;
     }
 
     private void TogglePauseUI(bool paused)
@@ -57,21 +62,24 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FadingIn)
+        if (this.FadingIn && this.FadingOut)
         {
-            BlackScreen.color = new Color(BlackScreen.color.r, BlackScreen.color.g, BlackScreen.color.b, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * Time.deltaTime));
-           // BlackScreen.CrossFadeAlpha(1, FadeToBlackDuration, false);
-
-           if (BlackScreen.color.a == 1f)
-           {
-               FadingIn = false;
-           }
+            Debug.LogError("Error: UI manager cannot fade the black screen in and out at the same time!");
+            return;
         }
 
-        if (FadingOut)
+        if (FadingIn)
         {
-            BlackScreen.color = new Color(BlackScreen.color.r, BlackScreen.color.g, BlackScreen.color.b, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * Time.deltaTime));
-            // BlackScreen.CrossFadeAlpha(1, FadeToBlackDuration, false);
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * Time.deltaTime));
+
+            if (BlackScreen.color.a == 1f)
+            {
+               FadingIn = false;
+            }
+        }
+        else if (FadingOut)
+        {
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * Time.deltaTime));
 
             if (BlackScreen.color.a == 0f)
             {

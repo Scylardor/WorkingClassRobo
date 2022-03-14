@@ -1,86 +1,236 @@
 fileFormatVersion: 2
 guid: 60c5f5426fc939e46acee26bb6533774
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: object1
-    100004: object10
-    100006: object11
-    100008: object12
-    100010: object13
-    100012: object14
-    100014: object2
-    100016: object3
-    100018: object4
-    100020: object5
-    100022: object6
-    100024: object7
-    100026: object8
-    100028: object9
-    400000: //RootNode
-    400002: object1
-    400004: object10
-    400006: object11
-    400008: object12
-    400010: object13
-    400012: object14
-    400014: object2
-    400016: object3
-    400018: object4
-    400020: object5
-    400022: object6
-    400024: object7
-    400026: object8
-    400028: object9
-    2100000: Oak_Leaves
-    2100002: Coconut
-    2100004: Wood_Palm
-    2300000: object1
-    2300002: object10
-    2300004: object11
-    2300006: object12
-    2300008: object13
-    2300010: object14
-    2300012: object2
-    2300014: object3
-    2300016: object4
-    2300018: object5
-    2300020: object6
-    2300022: object7
-    2300024: object8
-    2300026: object9
-    3300000: object1
-    3300002: object10
-    3300004: object11
-    3300006: object12
-    3300008: object13
-    3300010: object14
-    3300012: object2
-    3300014: object3
-    3300016: object4
-    3300018: object5
-    3300020: object6
-    3300022: object7
-    3300024: object8
-    3300026: object9
-    4300000: object1
-    4300002: object10
-    4300004: object11
-    4300006: object12
-    4300008: object13
-    4300010: object14
-    4300012: object2
-    4300014: object3
-    4300016: object4
-    4300018: object5
-    4300020: object6
-    4300022: object7
-    4300024: object8
-    4300026: object9
+  serializedVersion: 21100
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: object1
+  - first:
+      1: 100004
+    second: object10
+  - first:
+      1: 100006
+    second: object11
+  - first:
+      1: 100008
+    second: object12
+  - first:
+      1: 100010
+    second: object13
+  - first:
+      1: 100012
+    second: object14
+  - first:
+      1: 100014
+    second: object2
+  - first:
+      1: 100016
+    second: object3
+  - first:
+      1: 100018
+    second: object4
+  - first:
+      1: 100020
+    second: object5
+  - first:
+      1: 100022
+    second: object6
+  - first:
+      1: 100024
+    second: object7
+  - first:
+      1: 100026
+    second: object8
+  - first:
+      1: 100028
+    second: object9
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: object1
+  - first:
+      4: 400004
+    second: object10
+  - first:
+      4: 400006
+    second: object11
+  - first:
+      4: 400008
+    second: object12
+  - first:
+      4: 400010
+    second: object13
+  - first:
+      4: 400012
+    second: object14
+  - first:
+      4: 400014
+    second: object2
+  - first:
+      4: 400016
+    second: object3
+  - first:
+      4: 400018
+    second: object4
+  - first:
+      4: 400020
+    second: object5
+  - first:
+      4: 400022
+    second: object6
+  - first:
+      4: 400024
+    second: object7
+  - first:
+      4: 400026
+    second: object8
+  - first:
+      4: 400028
+    second: object9
+  - first:
+      21: 2100000
+    second: Oak_Leaves
+  - first:
+      21: 2100002
+    second: Coconut
+  - first:
+      21: 2100004
+    second: Wood_Palm
+  - first:
+      23: 2300000
+    second: object1
+  - first:
+      23: 2300002
+    second: object10
+  - first:
+      23: 2300004
+    second: object11
+  - first:
+      23: 2300006
+    second: object12
+  - first:
+      23: 2300008
+    second: object13
+  - first:
+      23: 2300010
+    second: object14
+  - first:
+      23: 2300012
+    second: object2
+  - first:
+      23: 2300014
+    second: object3
+  - first:
+      23: 2300016
+    second: object4
+  - first:
+      23: 2300018
+    second: object5
+  - first:
+      23: 2300020
+    second: object6
+  - first:
+      23: 2300022
+    second: object7
+  - first:
+      23: 2300024
+    second: object8
+  - first:
+      23: 2300026
+    second: object9
+  - first:
+      33: 3300000
+    second: object1
+  - first:
+      33: 3300002
+    second: object10
+  - first:
+      33: 3300004
+    second: object11
+  - first:
+      33: 3300006
+    second: object12
+  - first:
+      33: 3300008
+    second: object13
+  - first:
+      33: 3300010
+    second: object14
+  - first:
+      33: 3300012
+    second: object2
+  - first:
+      33: 3300014
+    second: object3
+  - first:
+      33: 3300016
+    second: object4
+  - first:
+      33: 3300018
+    second: object5
+  - first:
+      33: 3300020
+    second: object6
+  - first:
+      33: 3300022
+    second: object7
+  - first:
+      33: 3300024
+    second: object8
+  - first:
+      33: 3300026
+    second: object9
+  - first:
+      43: 4300000
+    second: object1
+  - first:
+      43: 4300002
+    second: object10
+  - first:
+      43: 4300004
+    second: object11
+  - first:
+      43: 4300006
+    second: object12
+  - first:
+      43: 4300008
+    second: object13
+  - first:
+      43: 4300010
+    second: object14
+  - first:
+      43: 4300012
+    second: object2
+  - first:
+      43: 4300014
+    second: object3
+  - first:
+      43: 4300016
+    second: object4
+  - first:
+      43: 4300018
+    second: object5
+  - first:
+      43: 4300020
+    second: object6
+  - first:
+      43: 4300022
+    second: object7
+  - first:
+      43: 4300024
+    second: object8
+  - first:
+      43: 4300026
+    second: object9
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -113,25 +263,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -140,10 +297,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -153,13 +310,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
