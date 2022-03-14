@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public Image    BlackScreen;
 
     public float    FadeToBlackDuration;
-    public bool     FadingIn, FadingOut;
+    private bool     FadingIn, FadingOut;
 
     public GameObject PauseScreen;
     public GameObject OptionsScreen;
@@ -68,9 +68,10 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        // use unscaled delta time because sometimes we wanna be able to fade out during pause ... (ie. when timeScale = 0f)
         if (FadingIn)
         {
-            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * Time.deltaTime));
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * Time.unscaledDeltaTime));
 
             if (BlackScreen.color.a == 1f)
             {
@@ -79,15 +80,30 @@ public class UIManager : MonoBehaviour
         }
         else if (FadingOut)
         {
-            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * Time.deltaTime));
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * Time.unscaledDeltaTime));
 
             if (BlackScreen.color.a == 0f)
             {
-                FadingOut = false;
+                StopFadingOutBlackScreen();
             }
         }
     }
 
+    public void StartFadingInBlackScreen()
+    {
+        this.FadingIn = true;
+        this.BlackScreen.gameObject.SetActive(true);
+    }
+    public void StartFadingOutBlackScreen()
+    {
+        this.FadingOut = true;
+    }
+
+    public void StopFadingOutBlackScreen()
+    {
+        this.FadingOut = false;
+        this.BlackScreen.gameObject.SetActive(false);
+    }
 
     public void Resume()
     {
@@ -97,13 +113,11 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.LoadLevel("MainMenu");
     }
 
     public void Options()
     {
-
-
         this.OptionsScreen.SetActive(true);
     }
 

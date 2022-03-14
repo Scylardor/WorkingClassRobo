@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
     private Vector3 PlayerRespawnPosition;
 
     private int CoinAmount;
+
+    private int StarAmount;
 
     public GameObject   PlayerDeathEffect;
 
@@ -32,6 +35,65 @@ public class GameManager : MonoBehaviour
         PlayerController.Instance.OnPauseTriggered += this.ToggleWorldPause;
 
         Time.timeScale = 1f; // in case we went to main menu directly from pause menu previously
+
+        // Count the number of coins and update player preferences with it if it hasn't already been done
+        var curSceneName = SceneManager.GetActiveScene().name;
+
+        var maxCoinsProperty = curSceneName + "_maxCoins";
+        if (GetIntPropertyOr(maxCoinsProperty, -1) == -1)
+        {
+            int levelTotalCoinAmount = CalculateMaxCoinsInLevel();
+            this.SetIntProperty(maxCoinsProperty, levelTotalCoinAmount);
+        }
+
+        // same with stars
+        var maxStarsProperty = curSceneName + "_maxStars";
+        this.RegisterLevelMaxPickupCount<Star>(maxStarsProperty);
+    }
+
+    public int GetIntPropertyOr(string prop, int defaultValue)
+    {
+        int val = PlayerPrefs.GetInt(prop, defaultValue);
+        return val;
+    }
+
+    public void SetIntProperty(string prop, int value)
+    {
+        PlayerPrefs.SetInt(prop, value);
+    }
+
+
+    private int CalculateMaxCoinsInLevel()
+    {
+        // First, calculate the total value of the coin pickups in the level...
+        CoinPickup[] objs = GameObject.FindObjectsOfType<CoinPickup>();
+        var totalCoins = 0;
+        foreach (CoinPickup cp in objs)
+        {
+            totalCoins += cp.CoinsGained;
+        }
+
+        // But enemies can also drop coins. analyze each enemy to evaluate their total coin value.
+        EnemyAnimator[] enemies = GameObject.FindObjectsOfType<EnemyAnimator>();
+        foreach (EnemyAnimator ea in enemies)
+        {
+            CoinPickup prefabPickup = ea.DroppedPickup.GetComponentInChildren<CoinPickup>();
+            if (prefabPickup != null)
+                totalCoins += prefabPickup.CoinsGained;
+        }
+
+        // we now have the total coin amount of the level
+        return totalCoins;
+    }
+
+    private void RegisterLevelMaxPickupCount<T>(string property)
+    {
+        if (!PlayerPrefs.HasKey(property))
+        {
+            Object[] objs = GameObject.FindObjectsOfType(typeof(T));
+
+            PlayerPrefs.SetInt(property, objs.Length);
+        }
     }
 
     private void ToggleWorldPause(bool paused)
@@ -63,6 +125,11 @@ public class GameManager : MonoBehaviour
         return CoinAmount;
     }
 
+    public void CollectStar()
+    {
+        this.StarAmount++;
+    }
+
 
     public IEnumerator  RespawnRoutine()
     {
@@ -74,11 +141,11 @@ public class GameManager : MonoBehaviour
         // Necessary to avoid a weird camera warping on respawn
         CameraController.Instance.CameraBrain.enabled = false;
 
-        UIManager.Instance.FadingIn = true;
+        UIManager.Instance.StartFadingInBlackScreen();
 
         yield return new WaitForSeconds(2f);
 
-        UIManager.Instance.FadingOut = true;
+        UIManager.Instance.StartFadingOutBlackScreen();
 
         PlayerController.Instance.transform.position = PlayerRespawnPosition;
         PlayerController.Instance.gameObject.SetActive(true);
@@ -98,5 +165,35 @@ public class GameManager : MonoBehaviour
     public void SetSpawnPoint(Vector3 newSpawnPoint)
     {
         PlayerRespawnPosition = newSpawnPoint;
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        StartCoroutine(LevelLoadCo(levelName));
+    }
+
+    private IEnumerator LevelLoadCo(string levelName)
+    {
+        // Save our number of collected coins and collected stars
+        var curSceneName = SceneManager.GetActiveScene().name;
+        var coinsProp = curSceneName + "_coins";
+        if (this.CoinAmount > GetIntPropertyOr(coinsProp, 0))
+        {
+            SetIntProperty(coinsProp, this.CoinAmount);
+        }
+
+        // same with stars
+        var starsProp = curSceneName + "_stars";
+        if (this.StarAmount > GetIntPropertyOr(starsProp, 0))
+        {
+            SetIntProperty(starsProp, this.StarAmount);
+        }
+
+        UIManager.Instance.StartFadingInBlackScreen();
+
+        // Use WaitForSecondsRealtime because we don't wanna be affected by pause time scale...
+        yield return new WaitForSecondsRealtime(UIManager.Instance.FadeToBlackDuration);
+
+        SceneManager.LoadScene(levelName);
     }
 }

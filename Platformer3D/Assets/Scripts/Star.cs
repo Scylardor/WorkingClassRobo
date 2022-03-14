@@ -32,6 +32,7 @@ public class Star : MonoBehaviour
     {
         PlayerController.Instance.OnLanded -= this.OnPlayerLanded;
 
+        GameManager.Instance.CollectStar();
         StartCoroutine(this.ScheduleCollectionMusic());
         StartCoroutine(this.ScheduleCollectedPlayerAnimation());
     }

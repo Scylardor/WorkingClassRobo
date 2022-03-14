@@ -28,7 +28,6 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("Continue", 1);
 
-
         SceneManager.LoadScene(firstLevel);
     }
     public void Continue()

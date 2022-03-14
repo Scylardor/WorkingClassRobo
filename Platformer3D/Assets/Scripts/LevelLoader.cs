@@ -21,15 +21,6 @@ public class LevelLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(LevelLoadCo());
-    }
-
-    private IEnumerator LevelLoadCo()
-    {
-        UIManager.Instance.FadingIn = true;
-
-        yield return new WaitForSeconds(UIManager.Instance.FadeToBlackDuration);
-
-        SceneManager.LoadScene(this.LevelToLoad);
+        GameManager.Instance.LoadLevel(this.LevelToLoad);
     }
 }
