@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!65 &4561003318924615854
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6391517629028743520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 1.19062, z: 6}
+  m_Center: {x: 4.9999995, y: 1.23, z: 5}
+--- !u!114 &439784791458783901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6391517629028743520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb79a84745b1da64fb6fa18c8b48e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GracePeriod: 0.5
+--- !u!1001 &2726655341427227844
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1180587959532655680, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_Name
+      value: PressureRetractableSpikes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -32.252445
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -42.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450629710914810658, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943841230212581257, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 90d4a49054b2c484aae2d4f415e6a14b, type: 2}
+    - target: {fileID: 3999470800158254035, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611789389345839663, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: Period
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611789389345839663, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: MovementSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611789389345839663, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: automaticMoveUp
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+--- !u!1 &6391517629028743520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9035414910713415076, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+  m_PrefabInstance: {fileID: 2726655341427227844}
+  m_PrefabAsset: {fileID: 0}
