@@ -23,18 +23,46 @@ public class DamageDealer : MonoBehaviour
 
     }
 
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(this.gameObject.name + " hurts " + other.gameObject.name);
+        var hp = other.gameObject.GetComponent<Health>();
+
+        if (hp != null)
+        {
+            initialHurtFailed = !hp.Hurt(this.DamageInfo);
+        }
+    }
+
+    protected virtual void OnCollisionStay(Collision other)
+    {
+        if (this.initialHurtFailed)
+        {
+            var hp = other.gameObject.GetComponent<Health>();
+
+            if (hp != null)
+            {
+                initialHurtFailed = !hp.Hurt(this.DamageInfo);
+            }
+        }
+    }
+
+    protected virtual void OnCollisionExit(Collision other)
+    {
+        initialHurtFailed = false;
+    }
+
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         Debug.Log(this.gameObject.name + " hurts " + other.name);
         var hp = other.GetComponent<Health>();
 
-          if (hp != null)
+        if (hp != null)
         {
             initialHurtFailed = !hp.Hurt(this.DamageInfo);
         }
     }
-
 
     protected virtual void OnTriggerStay(Collider other)
     {
