@@ -76,13 +76,15 @@ public class Health : MonoBehaviour
 
 
 
-    public void Hurt(DamageInfo dmgInfo)
+    public bool Hurt(DamageInfo dmgInfo)
     {
-        if (!this.IsInvincible)
+        bool isHurt = !this.IsInvincible;
+        if (isHurt)
         {
             this.StartCoroutine(this.HurtRoutine(dmgInfo));
         }
 
+        return isHurt;
     }
 
     public void Heal(int healed = 1)
