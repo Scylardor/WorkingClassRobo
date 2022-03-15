@@ -186,6 +186,18 @@ MonoBehaviour:
   InvincibilityFlashingObjects: []
   DefaultHurtSound: {fileID: 8300000, guid: 13e9fbf4185a234469ab95384ee3d963, type: 3}
   SoundType: 1
+--- !u!114 &744082582210976182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9143197973731170616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f112e8d9a2ee5a4e98039bc0e6275af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9143197973731139578
 PrefabInstance:
   m_ObjectHideFlags: 0

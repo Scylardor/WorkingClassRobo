@@ -31,6 +31,8 @@ public class PlayerJumpHurtbox : DamageDealer
         base.OnTriggerEnter(other);
 
         this.BoundController?.Bounce();
+        if (other.GetComponent<Bounceable>() != null)
+            this.BoundController?.Bounce();
 
     }
 }

@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &8835141027747448385
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7365805601153630792}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+--- !u!135 &5200712689327969940
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7365805601153630794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.005
+  m_Center: {x: -1.0702167e-10, y: -0.0000000015145804, z: -0.015466532}
 --- !u!1 &9216878909762411532
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2223691121952952672}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boss Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,6 +68,14 @@ PrefabInstance:
     - target: {fileID: 100000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
       propertyPath: m_Name
       value: BossHandR
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
       propertyPath: m_RootOrder
@@ -86,10 +121,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 27ce7e08195449a4d8a06962921af2a0, type: 2}
+    - target: {fileID: 2300002, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 17277450cbb2ee543b88c7c26a8b69a2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+--- !u!1 &7365805601153630792 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+  m_PrefabInstance: {fileID: 7365805601153729768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7365805601154129512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
+  m_PrefabInstance: {fileID: 7365805601153729768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7365805601153630794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: c0888389fc3a6ad438c879f45c580f16, type: 3}
   m_PrefabInstance: {fileID: 7365805601153729768}
   m_PrefabAsset: {fileID: 0}
