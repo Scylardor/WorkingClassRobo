@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     }
     public void Continue()
     {
-        SceneManager.LoadScene(levelSelect);
+        GameManager.Instance.LoadLevel("LevelSelect");
     }
     public void Options()
     {

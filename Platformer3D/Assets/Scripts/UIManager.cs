@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
 
     public Slider SFXSlider;
 
+    public bool lockCursor = true;
+
     void Awake()
     {
         Instance = this;
@@ -29,17 +31,26 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (this.lockCursor)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
 
         PlayerController.Instance.OnPauseTriggered += this.TogglePauseUI;
         this.PauseScreen.SetActive(false);
         this.OptionsScreen.SetActive(false);
 
         // Start the level with fading out from the black screen
+        this.BlackScreen.gameObject.SetActive(true);
         BlackScreen.color = new Color(0f, 0f, 0f, 1f);
-
-        this.FadingOut = true;
+        this.StartFadingOutBlackScreen();
     }
 
     private void TogglePauseUI(bool paused)
