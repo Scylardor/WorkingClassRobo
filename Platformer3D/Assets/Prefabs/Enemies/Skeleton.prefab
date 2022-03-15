@@ -166,7 +166,7 @@ MonoBehaviour:
   AttackCooldown: 3
   AIController: {fileID: 1824364179}
   DeathParticles: {fileID: 4959924243131733954, guid: a247eca4dbbef0344bce54da8e8c5caf, type: 3}
-  DroppedPickup: {fileID: 2386913589590038246, guid: 30178e875dc2e194fb78a7ccbc68cfef, type: 3}
+  DroppedPickup: {fileID: 3389545482778060243, guid: b5b20a98ba2debc4bb942fc97a2feff0, type: 3}
 --- !u!114 &1391127776
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -131,10 +131,13 @@ public class PatrolController : MonoBehaviour
     {
         yield return new WaitForSeconds(this.PatrolPointReachedWaitTime);
 
-        this.currentPoint = (this.currentPoint + 1) % this.patrolPoints.Length;
-        this.agent.SetDestination(this.patrolPoints[this.currentPoint].position);
+        if (this.patrolPoints.Length != 0)
+        {
+            this.currentPoint = (this.currentPoint + 1) % this.patrolPoints.Length;
+            this.agent.SetDestination(this.patrolPoints[this.currentPoint].position);
 
-        this.currentState = AIState.IsPatrolling;
+            this.currentState = AIState.IsPatrolling;
+        }
 
         idleCoroutine = null;
 

@@ -32,7 +32,6 @@ public class CoinPickup : BasePickup
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-
         if (other.tag == "Player")
         {
             GameManager.Instance.AddCoins(CoinsGained);
