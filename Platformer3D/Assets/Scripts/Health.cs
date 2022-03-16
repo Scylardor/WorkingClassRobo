@@ -81,7 +81,7 @@ public class Health : MonoBehaviour
         bool isHurt = !this.IsInvincible;
         if (isHurt)
         {
-            this.StartCoroutine(this.HurtRoutine(dmgInfo));
+            StartCoroutine(this.HurtRoutine(dmgInfo));
         }
 
         return isHurt;
@@ -146,11 +146,20 @@ public class Health : MonoBehaviour
 
         float halfPeriod = this.InvincibilityFlashingPeriod / 2f;
 
+        foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
+        {
+            Collider collider = flashingObj.GetComponent<Collider>();
+            if (collider)
+                collider.enabled = false;
+        }
+
         while (invincibilitySoFar < this.InvincibilityDuration)
         {
             foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
-                flashingObj.SetActive(false);
+                Renderer render = flashingObj.GetComponent<Renderer>();
+                if (render)
+                    render.enabled = false;
             }
 
             invincibilitySoFar += halfPeriod;
@@ -159,12 +168,22 @@ public class Health : MonoBehaviour
 
             foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
-                flashingObj.SetActive(true);
+                Renderer render = flashingObj.GetComponent<Renderer>();
+                if (render)
+                    render.enabled = true;
             }
 
             yield return new WaitForSeconds(halfPeriod);
 
             invincibilitySoFar += halfPeriod;
+        }
+
+
+        foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
+        {
+            Collider collider = flashingObj.GetComponent<Collider>();
+            if (collider)
+                collider.enabled = true;
         }
 
         this.InvincibleEvent?.Invoke(false);

@@ -197,6 +197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: saw
       objectReference: {fileID: 0}
+    - target: {fileID: 8159349793073062984, guid: 38202f560c3c4fd45be21f4f901f524d, type: 3}
+      propertyPath: m_Size.x
+      value: 4.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38202f560c3c4fd45be21f4f901f524d, type: 3}
 --- !u!4 &690015567190686590 stripped

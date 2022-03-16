@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 898161554}
   - component: {fileID: 335511985053390915}
   - component: {fileID: 86173532359480559}
+  - component: {fileID: 2725996027575340180}
   m_Layer: 7
   m_Name: crate
   m_TagString: Untagged
@@ -78,6 +79,18 @@ MonoBehaviour:
   lootHeightOffset: 0.5
   destroyedParticles: {fileID: 4959924243131733954, guid: a247eca4dbbef0344bce54da8e8c5caf, type: 3}
   destroyedSound: {fileID: 8300000, guid: 13e9fbf4185a234469ab95384ee3d963, type: 3}
+--- !u!114 &2725996027575340180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898161553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f112e8d9a2ee5a4e98039bc0e6275af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &613627268074866897
 PrefabInstance:
   m_ObjectHideFlags: 0
