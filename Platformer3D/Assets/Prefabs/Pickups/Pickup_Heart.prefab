@@ -85,6 +85,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart
       objectReference: {fileID: 0}
+    - target: {fileID: 6330198399201664766, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8595512544331125377, guid: d73ec48a01c3ecb4186e18e1922b678b, type: 3}
       propertyPath: m_RootOrder
       value: 0

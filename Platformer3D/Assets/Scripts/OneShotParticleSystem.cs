@@ -8,7 +8,7 @@ public class OneShotParticleSystem : MonoBehaviour
 
     public void Start()
     {
-        ps = GetComponent<ParticleSystem>();
+        ps = GetComponent<ParticleSystem>() ?? this.GetComponentInChildren<ParticleSystem>();
     }
 
     public void Update()
