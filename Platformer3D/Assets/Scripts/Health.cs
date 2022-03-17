@@ -75,6 +75,10 @@ public class Health : MonoBehaviour
     }
 
 
+    public void SetInvincible(bool enabled)
+    {
+        this.IsInvincible = enabled;
+    }
 
     public bool Hurt(DamageInfo dmgInfo)
     {
@@ -157,9 +161,19 @@ public class Health : MonoBehaviour
         {
             foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
-                Renderer render = flashingObj.GetComponent<Renderer>();
-                if (render)
-                    render.enabled = false;
+                Renderer[] renders = flashingObj.GetComponentsInChildren<Renderer>();
+                foreach (var rdr in renders)
+                {
+                    if (rdr)
+                        rdr.enabled = false;
+                }
+
+                SkinnedMeshRenderer[] skRenders = flashingObj.GetComponentsInChildren<SkinnedMeshRenderer>();
+                foreach (var rdr in skRenders)
+                {
+                    if (rdr)
+                        rdr.enabled = false;
+                }
             }
 
             invincibilitySoFar += halfPeriod;
@@ -168,9 +182,19 @@ public class Health : MonoBehaviour
 
             foreach (GameObject flashingObj in this.InvincibilityFlashingObjects)
             {
-                Renderer render = flashingObj.GetComponent<Renderer>();
-                if (render)
-                    render.enabled = true;
+                Renderer[] renders = flashingObj.GetComponentsInChildren<Renderer>();
+                foreach (var rdr in renders)
+                {
+                    if (rdr)
+                        rdr.enabled = true;
+                }
+
+                SkinnedMeshRenderer[] skRenders = flashingObj.GetComponentsInChildren<SkinnedMeshRenderer>();
+                foreach (var rdr in skRenders)
+                {
+                    if (rdr)
+                        rdr.enabled = true;
+                }
             }
 
             yield return new WaitForSeconds(halfPeriod);
