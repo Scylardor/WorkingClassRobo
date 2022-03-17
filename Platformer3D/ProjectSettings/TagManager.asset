@@ -15,10 +15,10 @@ TagManager:
   - Enemies
   - Pickups
   - Interactables
-  - 
-  - 
-  - 
-  - 
+  - Boss
+  - Hurtable
+  - PlayerHurtable
+  - EnemyHurtbox
   - 
   - 
   - 

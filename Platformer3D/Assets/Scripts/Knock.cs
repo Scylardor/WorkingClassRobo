@@ -19,6 +19,9 @@ public class Knock : MonoBehaviour
 
     protected void OnCollisionEnter(Collision other)
     {
+        if (enabled == false)
+            return;
+
         var knockable = other.gameObject.GetComponent<Knockable>();
         if (knockable)
             knockable.Knockback();
@@ -26,6 +29,9 @@ public class Knock : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (enabled == false)
+            return;
+
         var knockable = other.GetComponent<Knockable>();
         if (knockable)
             knockable.Knockback();

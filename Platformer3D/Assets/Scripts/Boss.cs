@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -33,6 +36,8 @@ public class Boss : MonoBehaviour
     private bool leftHandDown, rightHandDown;
 
     public Transform target;
+
+    private IEnumerator thinkCoroutine;
 
     private enum AttackingHand
     {
@@ -71,7 +76,14 @@ public class Boss : MonoBehaviour
         ToggleAttackMode(AttackingHand.Left, false);
         ToggleAttackMode(AttackingHand.Right, false);
 
-        StartCoroutine(ThinkCo());
+        thinkCoroutine = this.ThinkCo();
+        StartCoroutine(this.thinkCoroutine);
+
+    }
+
+    private bool IsDefeated()
+    {
+        return this.leftHandDown && this.rightHandDown;
     }
 
     private void OnRightHandHurt(int newhp)
@@ -83,7 +95,7 @@ public class Boss : MonoBehaviour
             this.rightHandDown = true;
             if (this.leftHandDown)
             {
-                this.bossAnimator.SetTrigger("IsDefeated");
+                this.Defeat();
             }
         }
         else
@@ -102,7 +114,7 @@ public class Boss : MonoBehaviour
             this.leftHandDown = true;
             if (this.rightHandDown)
             {
-                this.bossAnimator.SetTrigger("IsDefeated");
+                Defeat();
             }
         }
         else
@@ -113,6 +125,27 @@ public class Boss : MonoBehaviour
         }
     }
 
+    private void OnDefeatAnimationDone()
+    {
+        this.bossAnimator.enabled = false;
+        // Let everything fall to the ground.
+        Rigidbody[] bodies = this.GetComponentsInChildren<Rigidbody>();
+        foreach (var body in bodies)
+        {
+            body.gameObject.transform.parent = null;
+            body.isKinematic = false;
+            body.useGravity = true;
+
+        }
+    }
+    private void Defeat()
+    {
+        this.handAttacking = AttackingHand.None;
+        this.leftHandDown = this.rightHandDown = true;
+
+        this.bossAnimator.SetTrigger("IsDefeated");
+        StopCoroutine(this.thinkCoroutine);
+    }
 
     private void OnHurtAnimationDone()
     {
@@ -122,12 +155,12 @@ public class Boss : MonoBehaviour
 
     private IEnumerator ThinkCo()
     {
-        while (!this.leftHandDown || !this.rightHandDown)
+        while (!this.IsDefeated())
         {
             while (this.isCurrentlyHurt || this.handAttacking != AttackingHand.None)
                 yield return null; // try again next frame
 
-            if (this.leftHandDown && this.rightHandDown)
+            if (this.IsDefeated())
                 break;
 
             float thinkingDelay = Random.Range(this.thinkingDelayMin, this.thinkingDelayMax);
@@ -168,27 +201,40 @@ public class Boss : MonoBehaviour
     {
         if (attackHand == AttackingHand.Left && this.leftHand)
         {
-            var leftDD = this.leftHand.GetComponent<DamageDealer>();
-            if (leftDD)
-            {
-                leftDD.enabled = attackEnabled;
-            }
-
-            var leftHP = this.leftHand.GetComponentInChildren<Health>();
-            if (leftHP)
-                leftHP.SetInvincible(attackEnabled);
+            ToggleHandAttackMode(this.leftHand, attackEnabled);
         }
         else if (attackHand == AttackingHand.Right && this.rightHand)
         {
-            var rightDD = this.rightHand.GetComponent<DamageDealer>();
-            if (rightDD)
-            {
-                rightDD.enabled = attackEnabled;
-            }
-            var rightHP = this.rightHand.GetComponentInChildren<Health>();
-            if (rightHP)
-                rightHP.SetInvincible(attackEnabled);
+            ToggleHandAttackMode(this.rightHand, attackEnabled);
         }
+    }
+
+
+    private void ToggleHandAttackMode(GameObject hand, bool attackEnabled)
+    {
+        var damageDealer = hand.GetComponent<DamageDealer>();
+        if (damageDealer)
+        {
+            damageDealer.enabled = attackEnabled;
+        }
+        var HP = hand.GetComponentInChildren<Health>();
+        if (HP)
+            HP.SetInvincible(attackEnabled);
+
+        // (de)activate vulnerability collider
+        SphereCollider vulnCollider = hand.GetComponentInChildren<SphereCollider>();
+        if (vulnCollider)
+            vulnCollider.enabled = !attackEnabled;
+
+        // disable or enable knock
+        Knock handK = hand.GetComponentInChildren<Knock>();
+        if (handK)
+            handK.enabled = attackEnabled;
+
+        // disable or enable the hurtbox
+        BoxCollider hurtbox = hand.GetComponentInChildren<BoxCollider>();
+        if (hurtbox)
+            hurtbox.enabled = attackEnabled;
     }
 
     // Update is called once per frame
@@ -202,7 +248,7 @@ public class Boss : MonoBehaviour
 
     void LateUpdate()
     {
-        if (this.leftHandDown && this.rightHandDown)
+        if (this.IsDefeated())
             return;
 
         // Adjust position (keep at an ideal distance)
@@ -214,7 +260,7 @@ public class Boss : MonoBehaviour
 
         Debug.DrawLine(transform.position, idealLocation, Color.red, 0f, false);
 
-        float speed = vecToTarget.magnitude > this.IdealTargetDistance ? this.ApproachSpeed * 2 : this.ApproachSpeed;
+        float speed = vecToTarget.magnitude > this.IdealTargetDistance ? this.ApproachSpeed * 4 : this.ApproachSpeed;
         Vector3 targetLocation = Vector3.MoveTowards(transform.position, idealLocation, Time.deltaTime * speed);
 
         transform.position = targetLocation;
@@ -226,7 +272,13 @@ public class Boss : MonoBehaviour
 
     private State PickNextAttack()
     {
-        // flip a coin
+        if (this.leftHandDown)
+            return State.WantToStomp;
+
+        if (this.rightHandDown)
+            return State.WantToSweep;
+
+        // if both hands are available, flip a coin
         int rand = Random.Range(0, 2);
         if (rand == 0)
             return State.WantToStomp;

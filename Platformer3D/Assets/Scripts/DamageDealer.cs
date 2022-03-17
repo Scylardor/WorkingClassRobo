@@ -59,6 +59,10 @@ public class DamageDealer : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         Debug.Log(this.gameObject.name + " hurts " + other.name);
+
+        if (this.enabled == false)
+            return; // we have been disabled: don't deal damage
+
         var hp = other.GetComponent<Health>();
 
         if (hp != null)
