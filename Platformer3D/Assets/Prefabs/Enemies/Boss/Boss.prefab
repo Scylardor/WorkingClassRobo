@@ -71,6 +71,8 @@ MonoBehaviour:
   ApproachSpeed: 10
   IdealTargetDistance: 40
   IdealTargetHeightDifference: 5
+  defeatSound: {fileID: 8300000, guid: 3dac7289f04740047b95da72dc3b057a, type: 3}
+  disintegrateSound: {fileID: 8300000, guid: 7fa5255d9a9d09149ab9d7d1d42e2b4c, type: 3}
   leftHand: {fileID: 5317447525814356729}
   rightHand: {fileID: 6781124087418672153}
   target: {fileID: 0}

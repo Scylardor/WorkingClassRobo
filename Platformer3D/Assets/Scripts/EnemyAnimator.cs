@@ -32,7 +32,7 @@ public class EnemyAnimator : MonoBehaviour
             AIController.OnEndAttack += this.OnAttackEnd;
         }
 
-        var HP = this.GetComponent<Health>();
+        var HP = this.GetComponent<Health>() ?? this.GetComponentInChildren<Health>();
         if (HP != null)
         {
             HP.HurtEvent += this.OnHurt;

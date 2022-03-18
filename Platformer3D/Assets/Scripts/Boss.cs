@@ -20,6 +20,10 @@ public class Boss : MonoBehaviour
     public float IdealTargetDistance = 1f;
     public float IdealTargetHeightDifference = 20f;
 
+    public AudioClip defeatSound;
+
+    public AudioClip disintegrateSound;
+
     public GameObject leftHand;
 
     public GameObject rightHand;
@@ -127,7 +131,10 @@ public class Boss : MonoBehaviour
 
     private void OnDefeatAnimationDone()
     {
+        AudioManager.Instance.Play3DSound(transform.position, this.disintegrateSound);
+
         this.bossAnimator.enabled = false;
+
         // Let everything fall to the ground.
         Rigidbody[] bodies = this.GetComponentsInChildren<Rigidbody>();
         foreach (var body in bodies)
@@ -145,6 +152,8 @@ public class Boss : MonoBehaviour
 
         this.bossAnimator.SetTrigger("IsDefeated");
         StopCoroutine(this.thinkCoroutine);
+
+        AudioManager.Instance.Play3DSound(this.transform.position, this.defeatSound);
     }
 
     private void OnHurtAnimationDone()

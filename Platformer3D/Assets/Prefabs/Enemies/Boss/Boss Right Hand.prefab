@@ -293,8 +293,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageInfo:
     Damage: 1
-    HurtSound: {fileID: 8300000, guid: 7551c4b318a1ce24a805e67ff95bc319, type: 3}
-    Type: 0
+    HurtSound: {fileID: 8300000, guid: ea2606c91183bfd45893ed3b7726efab, type: 3}
+    Type: 1
 --- !u!65 &2579314613383808346
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -383,8 +383,8 @@ MonoBehaviour:
   InvincibilityFlashingPeriod: 0.1
   InvincibilityFlashingObjects:
   - {fileID: 7365805601153630794}
-  DefaultHurtSound: {fileID: 0}
-  SoundType: 0
+  DefaultHurtSound: {fileID: 8300000, guid: 8aacc3429e42f6f4abf44a4c61941eb8, type: 3}
+  SoundType: 1
 --- !u!1 &9216878909762411532
 GameObject:
   m_ObjectHideFlags: 0
