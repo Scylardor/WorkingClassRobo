@@ -23,6 +23,10 @@ public class UIManager : MonoBehaviour
 
     public bool lockCursor = true;
 
+    // Sometimes (e.g. at scene loading) unscaled delta time can become huge.
+    // In these cases, check if it's huge, and if so, use regular delta time instead.
+    private float UnscaledTimeTolerance = 0.5f;
+
     void Awake()
     {
         Instance = this;
@@ -44,13 +48,21 @@ public class UIManager : MonoBehaviour
         }
 
         PlayerController.Instance.OnPauseTriggered += this.TogglePauseUI;
-        this.PauseScreen.SetActive(false);
-        this.OptionsScreen.SetActive(false);
 
-        // Start the level with fading out from the black screen
-        this.BlackScreen.gameObject.SetActive(true);
-        BlackScreen.color = new Color(0f, 0f, 0f, 1f);
-        this.StartFadingOutBlackScreen();
+        if (this.PauseScreen)
+            this.PauseScreen.SetActive(false);
+
+        if (this.OptionsScreen)
+            this.OptionsScreen.SetActive(false);
+
+        if (this.BlackScreen)
+        {
+            // Start the level with fading out from the black screen
+            this.BlackScreen.gameObject.SetActive(true);
+            BlackScreen.color = new Color(0f, 0f, 0f, 1f);
+            this.StartFadingOutBlackScreen();
+        }
+
     }
 
     private void TogglePauseUI(bool paused)
@@ -82,7 +94,8 @@ public class UIManager : MonoBehaviour
         // use unscaled delta time because sometimes we wanna be able to fade out during pause ... (ie. when timeScale = 0f)
         if (FadingIn)
         {
-            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * Time.unscaledDeltaTime));
+            float dt = Time.unscaledDeltaTime < UnscaledTimeTolerance ? Time.unscaledDeltaTime : Time.deltaTime;
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 1f, FadeToBlackDuration * dt));
 
             if (BlackScreen.color.a == 1f)
             {
@@ -91,7 +104,8 @@ public class UIManager : MonoBehaviour
         }
         else if (FadingOut)
         {
-            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * Time.unscaledDeltaTime));
+            float dt = Time.unscaledDeltaTime < UnscaledTimeTolerance ? Time.unscaledDeltaTime : Time.deltaTime;
+            BlackScreen.color = new Color(0,0,0, Mathf.MoveTowards(BlackScreen.color.a, 0f, FadeToBlackDuration * dt));
 
             if (BlackScreen.color.a == 0f)
             {
