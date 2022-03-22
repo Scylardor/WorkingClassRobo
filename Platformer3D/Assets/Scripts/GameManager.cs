@@ -189,6 +189,8 @@ public class GameManager : MonoBehaviour
             SetIntProperty(starsProp, this.StarAmount);
         }
 
+        AudioManager.Instance.FadeMusicVolume(UIManager.Instance.FadeToBlackDuration, -80f);
+
         UIManager.Instance.StartFadingInBlackScreen();
 
         // Use WaitForSecondsRealtime because we don't wanna be affected by pause time scale...

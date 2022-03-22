@@ -63,6 +63,13 @@ public class UIManager : MonoBehaviour
             this.StartFadingOutBlackScreen();
         }
 
+
+        // Preset the music level sliders with the correct values
+        float playerVolume = PlayerPrefs.GetFloat("MaxMusicVolume", 0f);
+        this.MusicSlider.SetValueWithoutNotify(playerVolume);
+
+        float sfxVolume = PlayerPrefs.GetFloat("MaxSFXVolume", 0f);
+        this.SFXSlider.SetValueWithoutNotify(sfxVolume);
     }
 
     private void TogglePauseUI(bool paused)
@@ -160,10 +167,12 @@ public class UIManager : MonoBehaviour
     public void SetMusicLevel()
     {
         AudioManager.Instance.SetMusicLevel(this.MusicSlider.value);
+        PlayerPrefs.SetFloat("MaxMusicVolume", this.MusicSlider.value);
     }
     public void SetSFXLevel()
     {
         AudioManager.Instance.SetSFXLevel(this.SFXSlider.value);
+        PlayerPrefs.SetFloat("MaxSFXVolume", this.SFXSlider.value);
 
     }
 }

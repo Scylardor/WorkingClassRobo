@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class    AudioManager : MonoBehaviour
 {
     public static AudioManager  Instance;
 
@@ -25,14 +25,19 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+
         Instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        float playerMaxVolume = PlayerPrefs.GetFloat("MaxMusicVolume", 0f);
+        AudioManager.Instance.FadeMusicVolume(UIManager.Instance.FadeToBlackDuration, playerMaxVolume);
+
         PlayMusic(ClipToPlay);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -137,7 +142,7 @@ public class AudioManager : MonoBehaviour
         float currentVol;
         this.MusicMixer.audioMixer.GetFloat(exposedParam, out currentVol);
         currentVol = Mathf.Pow(10, currentVol / 20);
-        float targetValue = Mathf.Clamp(targetVolume, 0.0001f, 1);
+        float targetValue = Mathf.Clamp(targetVolume, -80f, 20f);
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;

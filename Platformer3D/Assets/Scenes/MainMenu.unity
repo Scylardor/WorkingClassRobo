@@ -1732,6 +1732,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2630371300263187192, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 396461547}
+    - target: {fileID: 2630371300263187192, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 2630371300374579021, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1739,6 +1747,14 @@ PrefabInstance:
     - target: {fileID: 2630371300374579021, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseOptions
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630371300427293996, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 396461547}
+    - target: {fileID: 2630371300427293996, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSFXLevel
       objectReference: {fileID: 0}
     - target: {fileID: 2630371300676261617, guid: 5c0fe745f8203be40bda223d6eb3daeb, type: 3}
       propertyPath: m_AnchorMax.x
