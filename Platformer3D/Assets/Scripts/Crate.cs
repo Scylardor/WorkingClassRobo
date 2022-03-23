@@ -51,6 +51,6 @@ public class Crate : MonoBehaviour
         }
 
         // our work here is done
-        Destroy(this.gameObject);
+        Destroy(this.transform.root.gameObject);
     }
 }
