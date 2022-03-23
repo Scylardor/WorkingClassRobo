@@ -13,6 +13,8 @@ public class EnemyAnimator : MonoBehaviour
 
     public float AttackCooldown = 1f;
 
+    public bool stopUponAttack = true;
+
     private bool IsAttackCoolingDown = false;
 
     private bool IsAttacking = false;
@@ -65,13 +67,22 @@ public class EnemyAnimator : MonoBehaviour
         IsAttacking = true;
     }
 
+    private void AnimEvent_UnStopAfterAttack()
+    {
+        this.Agent.isStopped = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        float sqrDistance = Vector3.SqrMagnitude(PlayerController.Instance.transform.position - transform.position);
-
         if (IsAttacking && !this.IsAttackCoolingDown)
         {
+            if (this.stopUponAttack)
+            {
+                this.Agent.velocity = Vector3.zero;
+                this.Agent.isStopped = true;
+            }
+
             this.AnimController.SetTrigger("Attack");
 
             StartCoroutine(this.CooldownAttack());

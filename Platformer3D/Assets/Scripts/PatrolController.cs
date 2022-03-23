@@ -94,10 +94,8 @@ public class PatrolController : MonoBehaviour
                 this.agent.SetDestination(PlayerController.Instance.transform.position);
                 break;
             case AIState.IsAttacking:
-
                 if (sqrDistance > this.AttackRangeSquare)
                 {
-                    this.agent.isStopped = false;
                     this.currentState = AIState.IsChasing;
                     OnEndAttack?.Invoke();
                 }
@@ -120,8 +118,6 @@ public class PatrolController : MonoBehaviour
 
     private void StartAttacking()
     {
-        this.agent.velocity = Vector3.zero;
-        this.agent.isStopped = true;
         this.OnStartAttack?.Invoke();
 
         this.currentState = AIState.IsAttacking;
