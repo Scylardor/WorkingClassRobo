@@ -26,6 +26,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GracePeriod: 0.5
+--- !u!64 &5639482382804415729
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940591061899289997}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7d81016281189964a9e52a3a29d355c2, type: 3}
+--- !u!114 &3474873588995405006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611343835038693257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14709cfdefbedbe49a93a8eee05d26d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageInfo:
+    Damage: 1
+    HurtSound: {fileID: 8300000, guid: 7551c4b318a1ce24a805e67ff95bc319, type: 3}
+    Type: 0
 --- !u!1001 &2726655341427227844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,6 +111,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2943841230210652489, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2943841230212581257, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -88,6 +122,10 @@ PrefabInstance:
     - target: {fileID: 3999470800158254035, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645883199124031879, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8611789389345839663, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
       propertyPath: Period
@@ -101,10 +139,21 @@ PrefabInstance:
       propertyPath: automaticMoveUp
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1047932235454380389, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
 --- !u!1 &6391517629028743520 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9035414910713415076, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+  m_PrefabInstance: {fileID: 2726655341427227844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &940591061899289997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2943841230210652489, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
+  m_PrefabInstance: {fileID: 2726655341427227844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5611343835038693257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7496375629089065805, guid: 501476091158df14ea32de7f7013a1a3, type: 3}
   m_PrefabInstance: {fileID: 2726655341427227844}
   m_PrefabAsset: {fileID: 0}

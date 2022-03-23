@@ -16,6 +16,8 @@ public class RectractSpikes : MonoBehaviour
 
     public bool automaticMoveUp = true;
 
+    public GameObject spikesUpHurtbox;
+
     private bool shouldGetDown = false;
 
     private bool shouldGetUp = true;
@@ -38,6 +40,8 @@ public class RectractSpikes : MonoBehaviour
         {
             this.targetPosition = this.transform.position + (Vector3.up * this.MovementOffset);
         }
+
+        this.spikesUpHurtbox.SetActive(this.shouldGetUp);
     }
 
     // Update is called once per frame
@@ -64,6 +68,7 @@ public class RectractSpikes : MonoBehaviour
         this.shouldGetUp = true;
         this.shouldGetDown = false;
         this.targetPosition = this.transform.position + (Vector3.up * this.MovementOffset);
+        this.spikesUpHurtbox.SetActive(true);
     }
 
     private IEnumerator SwitchPosition()
@@ -72,7 +77,7 @@ public class RectractSpikes : MonoBehaviour
 
         yield return new WaitForSeconds(this.Period);
 
-         this.shouldGetDown = !this.shouldGetDown;
+        this.shouldGetDown = !this.shouldGetDown;
         this.shouldGetUp = !this.shouldGetUp;
 
         if (this.shouldGetDown)
@@ -83,6 +88,9 @@ public class RectractSpikes : MonoBehaviour
         {
             this.targetPosition = downPosition + (Vector3.up * this.MovementOffset);
         }
+
+        // top hurtbox is only active when we're up.
+        this.spikesUpHurtbox.SetActive(this.shouldGetUp);
 
         // In case automaticMoveUp was set to false, moving up again will be controlled by someone else.
         // If its not true, stay down and wait for the signal.
