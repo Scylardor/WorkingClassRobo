@@ -10,33 +10,41 @@ public class PlayerController : MonoBehaviour
 
     public float    MoveSpeed = 1;
     public float    RotationSpeed = 1;
-    public float    JumpForce = 1;
     public float    GravityScale = 5;
+
+    [Tooltip("Cooldown in seconds before you can punch again")]
+    public float PunchAttackCooldown = 1f;
 
     public float EnemyHitBounceForce = 8f;
 
     public CharacterController Controller;
 
-    private Vector3 MoveDirection;
-
-    private float moveHorizontalForce;
-
-    private Camera PlayerCamera;
 
     public GameObject PlayerModel;
 
     public Animator PlayerAnimator;
 
-    [Tooltip("How much time do you have after landing to perform super or hyper jump (in seconds)")]
-    public float JumpLandingResetDelay = 1f;
-    public float SuperJumpBoost = 1.2f;
-    public float HyperJumpBoost = 1.2f;
+    [System.Serializable]
+    public struct JumpConfig
+    {
+        public float JumpForce;
 
-    public float HyperJumpRequiredHorizontalForce = 30f;
+        [Tooltip("How much time do you have after landing to perform super or hyper jump (in seconds)")]
+        public float JumpLandingResetDelay;
+        public float SuperJumpHeightBoost;
+        public float SuperJumpSpeedBoost;
 
-    public float aboutToLandDistance = 5f;
+        public float HyperJumpHeightBoost;
+        public float HyperJumpSpeedBoost;
 
-    public LayerMask AboutToLandRayLayer;
+        public float HyperJumpRequiredHorizontalForce;
+
+        public float aboutToLandDistance;
+
+        public LayerMask AboutToLandRayLayer;
+    }
+
+    public JumpConfig jumpConfig;
 
     private Knockable KnockableCpnt;
 
@@ -44,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private InputAction PauseAction;
     private InputAction JumpAction;
     private InputAction MoveAction;
+    private InputAction PunchAction;
 
     public static PlayerController Instance;
 
@@ -51,14 +60,19 @@ public class PlayerController : MonoBehaviour
 
     public event PauseEventHandler OnPauseTriggered;
 
-    private bool Paused = false;
+    private bool isPaused = false;
 
+    private Vector3 MoveDirection;
+    private float moveHorizontalForce;
+    private float currentMoveSpeed;
 
     private float currentJumpForce;
-
     private float timeSpentJumping;
-
     private bool isCurrentlyGrounded;
+
+    private bool canPunch = true;
+
+    private Camera PlayerCamera;
 
 
     private enum JumpCapability
@@ -87,14 +101,35 @@ public class PlayerController : MonoBehaviour
         this.JumpAction.started += this.OnJumpInput;
 
         this.MoveAction = this.PlayerActions.Player.Move;
+
+        this.PunchAction = this.PlayerActions.Player.Punch;
+        this.PunchAction.started += this.OnPunchInput;
     }
 
+    private void OnPunchInput(InputAction.CallbackContext obj)
+    {
+        if (!this.canPunch || !this.Controller.isGrounded)
+            return;
+
+        PlayerAnimator.SetTrigger("IsPunching");
+
+        StartCoroutine(CooldownPunchCo());
+    }
+
+    private IEnumerator CooldownPunchCo()
+    {
+        this.canPunch = false;
+        yield return new WaitForSeconds(this.PunchAttackCooldown);
+        this.canPunch = true;
+    }
 
     private void OnEnable()
     {
         this.PauseAction.Enable();
         this.JumpAction.Enable();
         this.MoveAction.Enable();
+        this.PunchAction.Enable();
+
     }
 
 
@@ -103,14 +138,27 @@ public class PlayerController : MonoBehaviour
         this.PauseAction.Disable();
         this.JumpAction.Disable();
         this.MoveAction.Disable();
+        this.PunchAction.Disable();
     }
 
     private void OnJumpInput(InputAction.CallbackContext obj)
     {
+        if (!this.Controller.isGrounded)
+            return;
+
         if (this.jumpStateResetCoroutine != null)
             StopCoroutine(this.jumpStateResetCoroutine);
 
         MoveDirection.y = this.currentJumpForce;
+
+        if (this.currentJumpCap == JumpCapability.SuperJump)
+        {
+            this.currentMoveSpeed = this.MoveSpeed * this.jumpConfig.SuperJumpSpeedBoost;
+        }
+        else if (this.currentJumpCap == JumpCapability.HyperJump)
+        {
+            this.currentMoveSpeed = this.MoveSpeed * this.jumpConfig.HyperJumpSpeedBoost;
+        }
     }
 
     private void OnPauseInput(InputAction.CallbackContext obj)
@@ -120,8 +168,8 @@ public class PlayerController : MonoBehaviour
 
     public void TogglePause()
     {
-        this.Paused = !this.Paused;
-        OnPauseTriggered(this.Paused);
+        this.isPaused = !this.isPaused;
+        OnPauseTriggered(this.isPaused);
         Debug.Log("Pause triggered");
     }
 
@@ -152,11 +200,15 @@ public class PlayerController : MonoBehaviour
 
         OnLanded += this.UpdateJumpCapabilityUponLanding;
 
-        currentJumpForce = this.JumpForce;
+        currentJumpForce = this.jumpConfig.JumpForce;
+
+        currentMoveSpeed = this.MoveSpeed;
     }
 
     private void UpdateJumpCapabilityUponLanding()
     {
+        this.currentMoveSpeed = this.MoveSpeed;
+
         if (this.jumpStateResetCoroutine != null)
             StopCoroutine(this.jumpStateResetCoroutine);
 
@@ -166,23 +218,23 @@ public class PlayerController : MonoBehaviour
         switch (this.currentJumpCap)
         {
             case JumpCapability.SimpleJump:
-                currentJumpForce *= this.SuperJumpBoost;
+                currentJumpForce *= this.jumpConfig.SuperJumpHeightBoost;
                 this.currentJumpCap = JumpCapability.SuperJump;
                 break;
             case JumpCapability.SuperJump:
-                if (this.moveHorizontalForce >= this.HyperJumpRequiredHorizontalForce)
+                if (this.moveHorizontalForce >= this.jumpConfig.HyperJumpRequiredHorizontalForce)
                 {
-                    this.currentJumpForce *= this.HyperJumpBoost;
+                    this.currentJumpForce *= this.jumpConfig.HyperJumpHeightBoost;
                     this.currentJumpCap = JumpCapability.HyperJump;
                 }
                 else
                 {
-                    this.currentJumpForce = this.JumpForce;
+                    this.currentJumpForce = this.jumpConfig.JumpForce;
                     this.currentJumpCap = JumpCapability.SimpleJump;
                 }
                 break;
             case JumpCapability.HyperJump:
-                this.currentJumpForce = this.JumpForce;
+                this.currentJumpForce = this.jumpConfig.JumpForce;
                 this.currentJumpCap = JumpCapability.SimpleJump;
                 break;
             default:
@@ -194,9 +246,9 @@ public class PlayerController : MonoBehaviour
     {
         // If the player doesn't jump again after some time, they lose their ability to super/hyper jump.
         // Just reset them to simple jump.
-        yield return new WaitForSeconds(this.JumpLandingResetDelay);
+        yield return new WaitForSeconds(this.jumpConfig.JumpLandingResetDelay);
         this.currentJumpCap = JumpCapability.SimpleJump;
-        this.currentJumpForce = this.JumpForce;
+        this.currentJumpForce = this.jumpConfig.JumpForce;
     }
 
     private void OnHurt(int newHP)
@@ -213,7 +265,7 @@ public class PlayerController : MonoBehaviour
         Controller.Move(MoveDirection * Time.deltaTime);
 
         this.currentJumpCap = JumpCapability.SimpleJump;
-        this.currentJumpForce = this.JumpForce;
+        this.currentJumpForce = this.jumpConfig.JumpForce;
 
         if (this.jumpStateResetCoroutine != null)
             StopCoroutine(this.jumpStateResetCoroutine);
@@ -283,7 +335,7 @@ public class PlayerController : MonoBehaviour
         if (this.MoveDirection.magnitude > 1.2f)
             this.MoveDirection.Normalize();
 
-        MoveDirection *= MoveSpeed;
+        MoveDirection *= this.currentMoveSpeed;
         MoveDirection.y = moveY;
 
         if (!Controller.isGrounded)
@@ -321,13 +373,13 @@ public class PlayerController : MonoBehaviour
             bool aboutToLand = Physics.Raycast(
                 transform.position,
                 -transform.up,
-                aboutToLandDistance,
-                AboutToLandRayLayer,
+                this.jumpConfig.aboutToLandDistance,
+                this.jumpConfig.AboutToLandRayLayer,
                 QueryTriggerInteraction.Ignore);
 
             PlayerAnimator.SetBool("IsAboutToLand", aboutToLand);
 
-            Debug.DrawRay(transform.position, -transform.up * this.aboutToLandDistance, Color.red);
+            Debug.DrawRay(transform.position, -transform.up * this.jumpConfig.aboutToLandDistance, Color.red);
         }
         else
         {

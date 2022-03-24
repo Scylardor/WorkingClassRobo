@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2245911159173114807}
   - component: {fileID: 7675436052573241665}
   - component: {fileID: -7994825306063293489}
-  - component: {fileID: 3872374831875852319}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -52,12 +51,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 20
   RotationSpeed: 5
-  JumpForce: 30
   GravityScale: 10
   EnemyHitBounceForce: 8
   Controller: {fileID: 2905130759156637441}
   PlayerModel: {fileID: 5391499919548782432}
   PlayerAnimator: {fileID: 2905130759516951749}
+  jumpConfig:
+    JumpForce: 35
+    JumpLandingResetDelay: 0.25
+    SuperJumpHeightBoost: 1.3
+    SuperJumpSpeedBoost: 1.1
+    HyperJumpHeightBoost: 1.2
+    HyperJumpSpeedBoost: 1.3
+    HyperJumpRequiredHorizontalForce: 30
+    aboutToLandDistance: 5
+    AboutToLandRayLayer:
+      serializedVersion: 2
+      m_Bits: 1937
 --- !u!143 &2905130759156637441
 CharacterController:
   m_ObjectHideFlags: 0
@@ -209,18 +219,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3872374831875852319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2905130759156637440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a02412abafd0092469c5d3e0f2026636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2905130760019760692
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,6 +41,14 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""45effb80-9c0f-4af8-8905-9f8ee374c5ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -197,6 +205,28 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c0fe7a2-cd7a-48c1-800b-dc7ffee81618"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16c4cb0a-5958-4ee2-8ebb-4bde64e4e8fe"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -236,6 +266,7 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +319,7 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Punch;
     public struct PlayerActions
     {
         private @InGameInputActions m_Wrapper;
@@ -295,6 +327,7 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Punch => m_Wrapper.m_Player_Punch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -313,6 +346,9 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Punch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
+                @Punch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
+                @Punch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -326,6 +362,9 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Punch.started += instance.OnPunch;
+                @Punch.performed += instance.OnPunch;
+                @Punch.canceled += instance.OnPunch;
             }
         }
     }
@@ -353,5 +392,6 @@ public class @InGameInputActions : IInputActionCollection, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnPunch(InputAction.CallbackContext context);
     }
 }
