@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
     private InGameInputActions  PlayerActions;
     private InputAction PauseAction;
+    private InputAction JumpAction;
+    private InputAction MoveAction;
 
     public static PlayerController Instance;
 
@@ -51,7 +53,6 @@ public class PlayerController : MonoBehaviour
 
     private bool Paused = false;
 
-    private bool isJumping = false;
 
     private float currentJumpForce;
 
@@ -78,20 +79,40 @@ public class PlayerController : MonoBehaviour
     {
         Instance = this;
         this.PlayerActions = new InGameInputActions();
+
+        this.PauseAction = this.PlayerActions.Player.Pause;
+        this.PauseAction.started += this.OnPauseInput;
+
+        this.JumpAction = this.PlayerActions.Player.Jump;
+        this.JumpAction.started += this.OnJumpInput;
+
+        this.MoveAction = this.PlayerActions.Player.Move;
     }
 
 
     private void OnEnable()
     {
-        this.PauseAction = this.PlayerActions.Player.Pause;
-        this.PauseAction.started += this.OnPauseInput;
         this.PauseAction.Enable();
+        this.JumpAction.Enable();
+        this.MoveAction.Enable();
     }
+
+
     private void OnDisable()
     {
-        this.PauseAction.started -= this.OnPauseInput;
         this.PauseAction.Disable();
+        this.JumpAction.Disable();
+        this.MoveAction.Disable();
     }
+
+    private void OnJumpInput(InputAction.CallbackContext obj)
+    {
+        if (this.jumpStateResetCoroutine != null)
+            StopCoroutine(this.jumpStateResetCoroutine);
+
+        MoveDirection.y = this.currentJumpForce;
+    }
+
     private void OnPauseInput(InputAction.CallbackContext obj)
     {
         TogglePause();
@@ -254,8 +275,8 @@ public class PlayerController : MonoBehaviour
     {
         float moveY = MoveDirection.y;
 
-        Vector3 inputVector = new Vector3(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal"), 0);
-        MoveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+        Vector2 moveVector = this.MoveAction.ReadValue<Vector2>();
+        MoveDirection = (transform.forward * moveVector.y) + (transform.right * moveVector.x);
 
         // It can happen, e.g. when controlling with keyboard, that the move direction is not normalized if going "sideways" (vertical and horizontal are both pressed)
         // in that case, Normalize to avoid going twice as fast when going sideways.
@@ -265,16 +286,15 @@ public class PlayerController : MonoBehaviour
         MoveDirection *= MoveSpeed;
         MoveDirection.y = moveY;
 
-        if (Controller.isGrounded)
-        {
-            ManageJumping();
-        }
-        else
+        if (!Controller.isGrounded)
         {
             MoveDirection.y += Physics.gravity.y * Time.deltaTime * GravityScale;
         }
 
-        Controller.Move(MoveDirection * Time.deltaTime);
+        if (this.MoveDirection != Vector3.zero)
+        {
+            Controller.Move(MoveDirection * Time.deltaTime);
+        }
 
         this.moveHorizontalForce = Mathf.Abs(this.MoveDirection.x) + Mathf.Abs(this.MoveDirection.z);
         // Only rotate the player if it's moving around
@@ -287,29 +307,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ManageJumping()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (this.jumpStateResetCoroutine != null)
-                StopCoroutine(this.jumpStateResetCoroutine);
-
-            MoveDirection.y = this.currentJumpForce;
-
-            this.isJumping = true;
-        }
-        else
-        {
-            this.isJumping = false;
-        }
-    }
-
     #region Animation
     private void UpdateAnimationController()
     {
         PlayerAnimator.SetFloat("Speed", Mathf.Min(this.Controller.velocity.magnitude, this.MoveSpeed));
         PlayerAnimator.SetBool("IsGrounded", Controller.isGrounded);
-        PlayerAnimator.SetBool("isJumping", this.isJumping);
         PlayerAnimator.SetFloat("TimeSpentJumping", this.timeSpentJumping);
 
         this.PlayerAnimator.SetFloat("HorizontalSpeed", this.moveHorizontalForce);
