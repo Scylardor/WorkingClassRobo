@@ -203,6 +203,17 @@ public class PlayerController : MonoBehaviour
         currentJumpForce = this.jumpConfig.JumpForce;
 
         currentMoveSpeed = this.MoveSpeed;
+
+        GameManager.Instance.OnPlayerRespawning += this.OnRespawn;
+
+    }
+
+    private void OnRespawn(Vector3 respawnPosition)
+    {
+        this.PlayerAnimator.SetBool("IsDead", false);
+        this.KnockableCpnt.IsKnockedBack = false;
+        this.Controller.enabled = true;
+        this.transform.position = respawnPosition;
     }
 
     private void UpdateJumpCapabilityUponLanding()
@@ -255,6 +266,8 @@ public class PlayerController : MonoBehaviour
     {
         if (newHP == 0)
         {
+            this.PlayerAnimator.SetBool("IsDead", true);
+            this.Controller.enabled = false;
             GameManager.Instance.RespawnPlayer();
         }
     }

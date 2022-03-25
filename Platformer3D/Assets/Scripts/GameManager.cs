@@ -7,17 +7,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public float PauseDurationBeforeRespawnBlackScreen = 2f;
+    public float RespawnBlackScreenDuration = 2f;
+
     private Vector3 PlayerRespawnPosition;
 
     private int CoinAmount;
 
     private int StarAmount;
 
-    public GameObject   PlayerDeathEffect;
-
-    public delegate void RespawnEvent();
-    public event RespawnEvent   OnPlayerDeath;
-    public event RespawnEvent   OnPlayerRespawning;
+    public delegate void RespawnEvent(Vector3 respawnPosition);
+    public event RespawnEvent OnPlayerRespawning;
 
     public delegate void CoinAmountChange(int newCoinAmount);
     public event CoinAmountChange CoinChangeEvent;
@@ -133,22 +133,18 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator  RespawnRoutine()
     {
-        PlayerController.Instance.gameObject.SetActive(false);
-
-        // Spawn death fx
-        Instantiate(PlayerDeathEffect, PlayerController.Instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.Instance.transform.rotation);
-
         // Necessary to avoid a weird camera warping on respawn
         CameraController.Instance.CameraBrain.enabled = false;
 
+        yield return new WaitForSeconds(this.PauseDurationBeforeRespawnBlackScreen);
+
         UIManager.Instance.StartFadingInBlackScreen();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(this.RespawnBlackScreenDuration);
+
+        this.OnPlayerRespawning?.Invoke(this.PlayerRespawnPosition);
 
         UIManager.Instance.StartFadingOutBlackScreen();
-
-        PlayerController.Instance.transform.position = PlayerRespawnPosition;
-        PlayerController.Instance.gameObject.SetActive(true);
 
         CameraController.Instance.CameraBrain.enabled = true;
 
@@ -159,7 +155,6 @@ public class GameManager : MonoBehaviour
             hp.ResetHealth();
         }
 
-        PlayerController.Instance.GetComponent<Knockable>().IsKnockedBack = false;
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)

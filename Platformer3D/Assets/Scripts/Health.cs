@@ -107,6 +107,10 @@ public class Health : MonoBehaviour
 
     private IEnumerator HurtRoutine(DamageInfo dmgInfo)
     {
+        // stop beating a dead horse!
+        if (this.CurrentHP == 0)
+            yield break;
+
         this.CurrentHP = Math.Max(this.CurrentHP - dmgInfo.Damage, 0);
 
         this.HurtEvent?.Invoke(this.CurrentHP);
@@ -114,7 +118,7 @@ public class Health : MonoBehaviour
         if (dmgInfo.Type != HurtSoundType.Silent)
             this.PlayHurtSound(dmgInfo);
 
-        if (this.InvincibilityDuration != 0f)
+        if (this.InvincibilityDuration != 0f && this.CurrentHP != 0)
         {
             this.IsInvincible = true;
             yield return this.FlashingRoutine();
