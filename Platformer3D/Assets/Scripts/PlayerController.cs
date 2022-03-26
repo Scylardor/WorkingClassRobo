@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Cooldown in seconds before you can punch again")]
     public float PunchAttackCooldown = 1f;
 
+    public PlayerPunchHurtbox PunchHurtbox;
+
     public float EnemyHitBounceForce = 8f;
 
     public CharacterController Controller;
@@ -113,6 +115,11 @@ public class PlayerController : MonoBehaviour
 
         PlayerAnimator.SetTrigger("IsPunching");
 
+        if (this.PunchHurtbox != null)
+        {
+            this.PunchHurtbox.gameObject.SetActive(false);
+        }
+
         StartCoroutine(CooldownPunchCo());
     }
 
@@ -173,6 +180,18 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Pause triggered");
     }
 
+
+    private void AnimEventOnPunchStart()
+    {
+        if (this.PunchHurtbox)
+            this.PunchHurtbox.gameObject.SetActive(true);
+    }
+
+    private void AnimEventOnPunchFinish()
+    {
+        if (this.PunchHurtbox)
+            this.PunchHurtbox.gameObject.SetActive(false);
+    }
     public void Bounce()
     {
         float bounceForce = this.EnemyHitBounceForce * (Input.GetButton("Jump") ? 1.5f : 1f);
