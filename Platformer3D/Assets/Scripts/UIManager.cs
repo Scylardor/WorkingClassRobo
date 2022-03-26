@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject PauseScreen;
     public GameObject OptionsScreen;
+
+    public GameObject pauseFirstSelectedButton, optionsFirstSelectedButton;
 
     public Slider MusicSlider;
 
@@ -79,6 +83,10 @@ public class UIManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+
+            // clear selected object
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(this.pauseFirstSelectedButton);
         }
         else
         {
@@ -151,11 +159,18 @@ public class UIManager : MonoBehaviour
     public void Options()
     {
         this.OptionsScreen.SetActive(true);
+
+        // clear selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(this.optionsFirstSelectedButton);
     }
 
     public void CloseOptions()
     {
         this.OptionsScreen.SetActive(false);
+        // clear selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(this.pauseFirstSelectedButton);
     }
 
 
