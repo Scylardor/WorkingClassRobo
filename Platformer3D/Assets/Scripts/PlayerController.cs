@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private float moveHorizontalForce;
     private float currentMoveSpeed;
 
+    private Vector2 currentInputVector = Vector2.zero;
     private float currentJumpForce;
     private float timeSpentJumping;
     private bool isCurrentlyGrounded;
@@ -136,6 +137,17 @@ public class PlayerController : MonoBehaviour
         this.JumpAction.Enable();
         this.MoveAction.Enable();
         this.PunchAction.Enable();
+
+        this.MoveAction.performed += ctx =>
+            {
+                this.currentInputVector = ctx.ReadValue<Vector2>();
+            };
+        this.MoveAction.canceled += ctx =>
+            {
+
+                this.currentInputVector = Vector2.zero;
+                Debug.Log("CANCELED");
+            };
 
     }
 
@@ -359,8 +371,7 @@ public class PlayerController : MonoBehaviour
     {
         float moveY = MoveDirection.y;
 
-        Vector2 moveVector = this.MoveAction.ReadValue<Vector2>();
-        MoveDirection = (transform.forward * moveVector.y) + (transform.right * moveVector.x);
+        MoveDirection = (transform.forward * this.currentInputVector.y) + (transform.right * this.currentInputVector.x);
 
         // It can happen, e.g. when controlling with keyboard, that the move direction is not normalized if going "sideways" (vertical and horizontal are both pressed)
         // in that case, Normalize to avoid going twice as fast when going sideways.
