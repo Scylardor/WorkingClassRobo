@@ -36,7 +36,7 @@ public class PatrolController : MonoBehaviour
     public event AttackEventHandler OnStartAttack;
     public event AttackEventHandler OnEndAttack;
 
-
+    private bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,11 +51,23 @@ public class PatrolController : MonoBehaviour
             Debug.Log("No patrol points set, Patrol Controller will idle");
         }
 
+        var HP = this.GetComponentInChildren<Health>();
+        if (HP)
+            HP.HurtEvent += this.OnHurt;
+    }
+
+    private void OnHurt(int newhp)
+    {
+        if (newhp == 0)
+            this.isDead = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (this.isDead)
+            return;
+
         // If player is in range, go chasing them.
         float sqrDistance = Vector3.SqrMagnitude(PlayerController.Instance.transform.position - transform.position);
         if (this.currentState != AIState.IsAttacking)

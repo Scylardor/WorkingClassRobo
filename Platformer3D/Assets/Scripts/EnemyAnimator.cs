@@ -25,6 +25,14 @@ public class EnemyAnimator : MonoBehaviour
 
     public GameObject DroppedPickup;
 
+    public GameObject AttackHurtbox;
+
+    public bool UseHurtAnimation = false;
+    public string HurtAnimTrigger = "TriggerHurt";
+
+    public bool UseDeathAnimation = false;
+    public string DeathAnimTrigger = "TriggerDeath";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,17 +51,22 @@ public class EnemyAnimator : MonoBehaviour
 
     private void OnHurt(int newhp)
     {
+        this.StopAttack();
+
         if (newhp == 0)
         {
-            if (this.DeathParticles != null)
+            this.Agent.enabled = false;
+
+            if (this.UseDeathAnimation)
             {
-                Instantiate(this.DeathParticles, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
+                this.AnimController.SetTrigger(this.DeathAnimTrigger);
             }
-
-             if (this.DroppedPickup != null)
-                Instantiate(this.DroppedPickup, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
-
-            Destroy(gameObject);
+            else
+                this.Die();
+        }
+        else if (this.UseHurtAnimation)
+        {
+            this.AnimController.SetTrigger(this.HurtAnimTrigger);
         }
     }
 
@@ -67,10 +80,52 @@ public class EnemyAnimator : MonoBehaviour
         IsAttacking = true;
     }
 
-    private void AnimEvent_UnStopAfterAttack()
+    private void AnimEvent_AttackStart()
     {
-        this.Agent.isStopped = false;
+        this.StartAttack();
     }
+
+    private void StartAttack()
+    {
+        if (this.AttackHurtbox)
+            this.AttackHurtbox.SetActive(true);
+
+        if (this.Agent.enabled)
+            this.Agent.isStopped = true;
+    }
+
+    private void AnimEvent_AttackEnd()
+    {
+        this.StopAttack();
+    }
+
+    private void StopAttack()
+    {
+        if (this.AttackHurtbox)
+            this.AttackHurtbox.SetActive(false);
+
+        if (this.Agent.enabled)
+            this.Agent.isStopped = false;
+    }
+
+    private void AnimEvent_DeathEnd()
+    {
+        this.Die();
+    }
+
+    private void Die()
+    {
+        if (this.DeathParticles != null)
+        {
+            Instantiate(this.DeathParticles, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
+        }
+
+        if (this.DroppedPickup != null)
+            Instantiate(this.DroppedPickup, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
+
+        Destroy(gameObject);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -98,5 +153,9 @@ public class EnemyAnimator : MonoBehaviour
         this.IsAttackCoolingDown = true;
         yield return new WaitForSeconds(this.AttackCooldown);
         this.IsAttackCoolingDown = false;
+
+        // Put this in numerous places because the attack animation can be aborted for example
+        if (this.Agent.enabled)
+            this.Agent.isStopped = false;
     }
 }

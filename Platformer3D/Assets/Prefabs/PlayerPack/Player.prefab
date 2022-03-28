@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5638278732108804406}
   m_Layer: 6
   m_Name: PunchHurtbox
-  m_TagString: Player
+  m_TagString: PlayerPunch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   - {fileID: 7875309745454181040}
   - {fileID: 7875309745454181146}
   DefaultHurtSound: {fileID: 0}
+  KnockOnDamageTaken: 0
   SoundType: 0
 --- !u!95 &659284171756454951
 Animator:

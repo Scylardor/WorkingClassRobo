@@ -28,7 +28,7 @@ public class KillZone : MonoBehaviour
         var HP = other.GetComponent<Health>();
         if (HP != null)
         {
-            HP.Hurt(new Health.DamageInfo(HP.MaxHP, null, Health.HurtSoundType.Silent));
+            HP.Hurt(new Health.DamageInfo(this.gameObject, HP.MaxHP, null, Health.HurtSoundType.Silent));
         }
 
     }

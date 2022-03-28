@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -23,6 +26,8 @@ public class Health : MonoBehaviour
 
     public AudioClip DefaultHurtSound;
 
+    public bool KnockOnDamageTaken = false;
+
     public enum HurtSoundType
     {
         Sound2D,
@@ -35,23 +40,27 @@ public class Health : MonoBehaviour
     [System.Serializable]
     public struct DamageInfo
     {
+        public GameObject Source { get; set; }
+
         public int Damage;
 
         public AudioClip HurtSound;
 
         public HurtSoundType Type;
 
-        public DamageInfo(int dmg, AudioClip sound = null, HurtSoundType soundType = HurtSoundType.Sound2D)
+        public DamageInfo(GameObject aggressor, int dmg, AudioClip sound = null, HurtSoundType soundType = HurtSoundType.Sound2D)
         {
+            this.Source = aggressor;
             this.Damage = dmg;
             this.HurtSound = sound;
             this.Type = soundType;
         }
     }
 
-
-
     public Health.HurtSoundType SoundType = Health.HurtSoundType.Sound2D;
+
+    [Tooltip("GameObjects having one of those tags will not be able to Hurt this object.")]
+    public List<string> IgnoredDamagerTags;
 
 
     private bool    IsInvincible = false;
@@ -85,7 +94,9 @@ public class Health : MonoBehaviour
         bool isHurt = !this.IsInvincible;
         if (isHurt)
         {
-            StartCoroutine(this.HurtRoutine(dmgInfo));
+            bool damagerIsIgnored = IgnoredDamagerTags.Any(ignoredTag => dmgInfo.Source.CompareTag(ignoredTag));
+            if (!damagerIsIgnored)
+                StartCoroutine(this.HurtRoutine(dmgInfo));
         }
 
         return isHurt;
@@ -118,13 +129,30 @@ public class Health : MonoBehaviour
         if (dmgInfo.Type != HurtSoundType.Silent)
             this.PlayHurtSound(dmgInfo);
 
+        if (this.KnockOnDamageTaken)
+        {
+            Knockable knckbl = dmgInfo.Source.GetComponentInChildren<Knockable>()
+                               ?? dmgInfo.Source.GetComponentInParent<Knockable>();
+
+            if (knckbl)
+                knckbl.Knockback();
+        }
+
         if (this.InvincibilityDuration != 0f && this.CurrentHP != 0)
         {
             this.IsInvincible = true;
-            yield return this.FlashingRoutine();
-        }
+            this.InvincibleEvent?.Invoke(true);
 
-        this.IsInvincible = false;
+            if (this.InvincibilityFlashingObjects.Length != 0)
+            {
+                StartCoroutine(this.FlashingRoutine());
+            }
+
+            yield return new WaitForSeconds(this.InvincibilityDuration);
+
+            this.IsInvincible = false;
+            this.InvincibleEvent?.Invoke(false);
+        }
     }
 
     private void PlayHurtSound(DamageInfo dmgInfo)
@@ -148,7 +176,6 @@ public class Health : MonoBehaviour
 
     private IEnumerator FlashingRoutine()
     {
-        this.InvincibleEvent?.Invoke(true);
 
         float invincibilitySoFar = 0f;
 
@@ -214,6 +241,5 @@ public class Health : MonoBehaviour
                 collider.enabled = true;
         }
 
-        this.InvincibleEvent?.Invoke(false);
     }
 }

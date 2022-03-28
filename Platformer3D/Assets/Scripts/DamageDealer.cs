@@ -33,6 +33,7 @@ public class DamageDealer : MonoBehaviour
 
         if (hp != null)
         {
+            this.DamageInfo.Source = this.gameObject;
             initialHurtFailed = !hp.Hurt(this.DamageInfo);
         }
     }
@@ -45,6 +46,7 @@ public class DamageDealer : MonoBehaviour
 
             if (hp != null)
             {
+                this.DamageInfo.Source = this.gameObject;
                 initialHurtFailed = !hp.Hurt(this.DamageInfo);
             }
         }
@@ -67,6 +69,7 @@ public class DamageDealer : MonoBehaviour
 
         if (hp != null)
         {
+            this.DamageInfo.Source = this.gameObject;
             initialHurtFailed = !hp.Hurt(this.DamageInfo);
         }
     }
@@ -79,6 +82,7 @@ public class DamageDealer : MonoBehaviour
 
             if (hp != null)
             {
+                this.DamageInfo.Source = this.gameObject;
                 initialHurtFailed = !hp.Hurt(this.DamageInfo);
             }
         }
