@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAnimator : MonoBehaviour
+public class FlyingEnemyAnimator : MonoBehaviour
 {
-    public NavMeshAgent Agent;
     public Animator AnimController;
 
     // With a velocity square magnitude equal or superior to this, we are considered as moving.
-    public float MovingSquareVelocityTolerance = 2f;
+    public float MovingVelocityTolerance = 2f;
 
     public float AttackCooldown = 1f;
 
@@ -19,7 +18,7 @@ public class EnemyAnimator : MonoBehaviour
 
     private bool IsAttacking = false;
 
-    public PatrolController AIController;
+    public FlyingPatrolController AIController;
 
     public GameObject DeathParticles;
 
@@ -55,8 +54,12 @@ public class EnemyAnimator : MonoBehaviour
 
         if (newhp == 0)
         {
-            if (this.Agent)
-                this.Agent.enabled = false;
+                Rigidbody rb = this.GetComponentInParent<Rigidbody>();
+            if (rb)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+            }
 
             if (this.UseDeathAnimation)
             {
@@ -91,8 +94,6 @@ public class EnemyAnimator : MonoBehaviour
         if (this.AttackHurtbox)
             this.AttackHurtbox.SetActive(true);
 
-        if (this.Agent && this.Agent.enabled)
-            this.Agent.isStopped = true;
     }
 
     private void AnimEvent_AttackEnd()
@@ -105,8 +106,6 @@ public class EnemyAnimator : MonoBehaviour
         if (this.AttackHurtbox)
             this.AttackHurtbox.SetActive(false);
 
-        if (this.Agent && this.Agent.enabled)
-            this.Agent.isStopped = false;
     }
 
     private void AnimEvent_DeathEnd()
@@ -116,6 +115,7 @@ public class EnemyAnimator : MonoBehaviour
 
     private void Die()
     {
+
         this.AttackHurtbox.SetActive(false);
 
         if (this.DeathParticles != null)
@@ -126,7 +126,8 @@ public class EnemyAnimator : MonoBehaviour
         if (this.DroppedPickup != null)
             Instantiate(this.DroppedPickup, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
 
-        Destroy(gameObject);
+        Destroy(transform.root.gameObject);
+
     }
 
 
@@ -135,20 +136,11 @@ public class EnemyAnimator : MonoBehaviour
     {
         if (IsAttacking && !this.IsAttackCoolingDown)
         {
-            if (this.stopUponAttack && this.Agent)
-            {
-                this.Agent.velocity = Vector3.zero;
-                this.Agent.isStopped = true;
-            }
 
             this.AnimController.SetTrigger("Attack");
 
             StartCoroutine(this.CooldownAttack());
         }
-
-        this.AnimController.SetBool(
-            "IsMoving",
-            this.Agent.velocity.sqrMagnitude >= this.MovingSquareVelocityTolerance);
     }
 
     IEnumerator CooldownAttack()
@@ -156,9 +148,5 @@ public class EnemyAnimator : MonoBehaviour
         this.IsAttackCoolingDown = true;
         yield return new WaitForSeconds(this.AttackCooldown);
         this.IsAttackCoolingDown = false;
-
-        // Put this in numerous places because the attack animation can be aborted for example
-        if (this.Agent.enabled)
-            this.Agent.isStopped = false;
     }
 }

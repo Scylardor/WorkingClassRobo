@@ -17,6 +17,7 @@ public class FlyingPatrolController : MonoBehaviour
     public float PatrolPointReachedWaitTime = 2f;
 
     public float ChaseRangeSquare; // Square distance at which the AI starts chasing the player
+
     public float AttackRangeSquare; // Square distance at which the AI starts chasing the player
 
     private int currentPoint = 0;
@@ -26,8 +27,11 @@ public class FlyingPatrolController : MonoBehaviour
     public enum AIState
     {
         IsIdle,
+
         IsPatrolling,
+
         IsChasing,
+
         IsAttacking
     };
 
@@ -36,6 +40,7 @@ public class FlyingPatrolController : MonoBehaviour
     public delegate void AttackEventHandler();
 
     public event AttackEventHandler OnStartAttack;
+
     public event AttackEventHandler OnEndAttack;
 
     private bool isDead = false;
@@ -52,6 +57,7 @@ public class FlyingPatrolController : MonoBehaviour
         }
         else
         {
+            this.currentState = AIState.IsIdle;
             Debug.Log("No patrol points set, Patrol Controller will idle");
         }
 
@@ -74,7 +80,8 @@ public class FlyingPatrolController : MonoBehaviour
 
         // If player is in range, go chasing them.
         float destinationDistance = Vector3.Distance(this.nextDestination, transform.position);
-        float playerSqrDistance = Vector3.SqrMagnitude(PlayerController.Instance.transform.position - transform.position);
+        float playerSqrDistance =
+            Vector3.SqrMagnitude(PlayerController.Instance.transform.position - transform.position);
 
         if (this.currentState != AIState.IsAttacking)
         {
@@ -107,31 +114,36 @@ public class FlyingPatrolController : MonoBehaviour
                 {
                     this.currentState = AIState.IsIdle;
                 }
+
                 break;
             case AIState.IsChasing:
                 this.nextDestination = PlayerController.Instance.transform.position;
                 break;
             case AIState.IsAttacking:
+                this.nextDestination = PlayerController.Instance.transform.position;
                 if (playerSqrDistance > this.AttackRangeSquare)
                 {
                     this.currentState = AIState.IsChasing;
                     OnEndAttack?.Invoke();
                 }
+
                 break; // do nothing for now
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
         // Move towards next destination.
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            this.nextDestination,
-            this.FlyingSpeed * Time.deltaTime);
-
+        if (this.currentState != AIState.IsAttacking && this.currentState != AIState.IsIdle)
+        {
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                this.nextDestination,
+                this.FlyingSpeed * Time.deltaTime);
+        }
         // Rotate towards next destination.
         Quaternion targetRotation = Quaternion.identity;
 
-        if (destinationDistance > this.DestinationReachedTolerance)
+        if (destinationDistance > this.DestinationReachedTolerance || this.currentState == AIState.IsChasing || this.currentState == AIState.IsAttacking)
         {
             // (use gram-schmidt to regenerate a new up vector and hope for the best)
             Vector3 newForward = (this.nextDestination - transform.position).normalized;
